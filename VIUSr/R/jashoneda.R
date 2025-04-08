@@ -1,4 +1,4 @@
-pacman::p_load(tidyverse, patchwork, purrr)
+pacman::p_load(tidyverse, patchwork, purrr, sf)
 
 
 dat <- read_csv("data-raw/vius_2021_puf.csv")
@@ -43,3 +43,14 @@ show_plots(page_num = 1)
 
 # Example: Show the second set of 10 plots
 # show_plots(page_num = 2)
+
+datavs <- dat %>% mutate(weightT = as.numeric(TABWEIGHT)*as.numeric(AVGWEIGHT)) %>%
+  select(REGSTATE, weightT, TABWEIGHT) %>%
+  group_by(REGSTATE) %>%
+  summarise(TWeight = sum(weightT, na.rm = TRUE), TTab = sum(TABWEIGHT)) %>%
+  mutate(TWeight/TTab)
+
+
+
+
+
