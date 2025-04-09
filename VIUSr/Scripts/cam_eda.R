@@ -42,7 +42,18 @@ vius <- vius |>
     TRUE ~ 10000
   ))
 
+miles <- vius |>
+  select(TABWEIGHT, REGSTATE, MILESANNL) |>
+  group_by(REGSTATE) |>
+  mutate(totalMiles = sum(TABWEIGHT * MILESANNL))
+
 g1 <- list(scope = 'usa', projection = list(type = 'albers usa'), showlakes = TRUE, lakecolor = toRGB("white"))
 
-fig1 <- plot_geo(locationmode = "USA-states") |>
+miles$hover <- with(miles, paste("State: ", miles$REGSTATE, "<br>", "Miles: ",
+                                 miles$totalMiles))
+
+fig1 <- plot_geo(miles, locationmode = "USA-states") |>
+  add_trace(z = ~totalMiles, text = ~hover, locations = ~REGSTATE,
+            color = ~totalMiles, colors = 'Blues',
+            hoverinfo = "text") |>
   layout(geo = g1)
