@@ -1,4 +1,4 @@
-pacman::p_load(tidyverse, patchwork, purrr, sf, usmap)
+pacman::p_load(tidyverse, patchwork, purrr, sf, usmap, plotly)
 
 
 dat <- read_csv("data-raw/vius_2021_puf.csv")
@@ -73,5 +73,29 @@ left_join(datavs, States, by = join_by(REGSTATE == abbr)) %>%
   ggplot() +
   geom_sf(aes(geometry = geom, fill = avgwt)) +
   scale_color_gradient()
+
+data_joined <- left_join(datavs, States, by = join_by(REGSTATE == abbr))
+
+plot_ly(
+  data = data_joined,
+  type = "choropleth",
+  locations = ~REGSTATE,         # State abbreviations
+  locationmode = "USA-states",   # Use 2-letter state codes
+  z = ~avgwt,                    # The variable to color by
+  colorscale = "Viridis",
+  colorbar = list(title = "Average Weight")
+) %>%
+  layout(
+    title = "Average Weight by State",
+    geo = list(
+      scope = "usa",
+      projection = list(type = "albers usa"),
+      showland = TRUE,
+      landcolor = toRGB("gray95"),
+      subunitcolor = toRGB("white"),
+      showlakes = TRUE,
+      lakecolor = "white"
+    )
+  )
 
 

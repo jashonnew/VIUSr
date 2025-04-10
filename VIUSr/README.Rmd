@@ -1,0 +1,68 @@
+---
+output: github_document
+---
+
+<!-- README.md is generated from README.Rmd. Please edit that file -->
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>",
+  fig.path = "man/figures/README-",
+  out.width = "100%"
+)
+```
+
+# VIUSr
+
+<!-- badges: start -->
+<!-- badges: end -->
+
+## Overview
+
+**`VIUSr`** is an R package developed to facilitate the cleaning, exploration, and visualization of data from the 2021 Vehicle Inventory and Use Survey (VIUS) conducted across the United States. This package provides a suite of tools to streamline the workflow from raw data to actionable insights, supporting users in extracting meaningful patterns at both national and state levels.
+
+## Key Features
+
+- **Automated Data Cleaning**: Efficiently prepares raw VIUS 2021 data into a tidy, analysis-ready format with minimal user intervention.
+- **State-Level Exploration**: Generate focused summaries and visualizations for individual U.S. states to understand regional vehicle usage patterns.
+- **Cross-State Comparison**: Compare metrics across states to identify trends and outliers in vehicle inventory and usage.
+- **National Overview**: Access high-level summaries and visual representations of key statistics across the entire U.S.
+- **Built-In Visualization Tools**: Create interactive and publication-ready plots, including maps and charts, with intuitive functions designed for ease of use.
+
+`VIUSr` is ideal for transportation analysts, researchers, policy makers, and data professionals seeking to work with VIUS 2021 data in a reproducible and interpretable manner.
+
+
+## Installation
+
+You can install the development version of VIUSr from [GitHub](https://github.com/) with:
+
+``` r
+# install.packages("pak")
+pak::pak("jashonnew/VIUSr_rfDSP_Final_Project")
+```
+
+## Example
+
+This is a basic example which shows you how to solve a common problem:
+
+```{r example}
+#library(VIUSr)
+## basic example code
+```
+
+What is special about using `README.Rmd` instead of just `README.md`? You can include R chunks like so:
+
+```{r cars}
+summary(cars)
+```
+
+You'll still need to render `README.Rmd` regularly, to keep `README.md` up-to-date. `devtools::build_readme()` is handy for this.
+
+You can also embed plots, for example:
+
+```{r pressure, echo = FALSE}
+plot(pressure)
+```
+
+In that case, don't forget to commit and push the resulting figure files, so they display on GitHub and CRAN.
