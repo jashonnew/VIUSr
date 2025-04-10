@@ -1,7 +1,7 @@
 library(tidyverse)
 library(plotly)
 
-vius <- read_csv("~/Downloads/vius_2021_puf.csv")
+vius <- read_csv("data-raw/vius_2021_puf.csv")
 
 vius$MODELYEAR <- str_replace_all(vius$MODELYEAR, "P", "") |>
   as.numeric()
@@ -54,14 +54,16 @@ vius <- vius |>
     TRUE ~ 0
   ))
 
-miles <- vius |>
-  select(TABWEIGHT, REGSTATE, MILESANNL) |>
-  group_by(REGSTATE) |>
-  mutate(totalMiles = sum(TABWEIGHT * MILESANNL))
-
 dollars <- vius |>
   select(TABWEIGHT, REGSTATE, GM_COST) |>
   group_by(REGSTATE) |>
+  mutate(dollarsSpent = sum(TABWEIGHT * GM_COST) / sum(TABWEIGHT)) |>
+  mutate(dollarsSpent = round(dollarsSpent, 2))
+
+dollarsBtype <- vius |>
+  select(TABWEIGHT, BTYPE, GM_COST) |>
+  filter(BTYPE != 'X') |>
+  group_by(BTYPE) |>
   mutate(dollarsSpent = sum(TABWEIGHT * GM_COST) / sum(TABWEIGHT)) |>
   mutate(dollarsSpent = round(dollarsSpent, 2))
 
@@ -71,6 +73,13 @@ extensive <- vius |>
   group_by(REGSTATE) |>
   mutate(dollarsSpent = sum(TABWEIGHT * ER_COST) / sum(TABWEIGHT)) |>
   mutate(dollarsSpent = round(dollarsSpent, 2), count = round(TABWEIGHT, 0))
+
+extensiveBtype <- vius |>
+  select(TABWEIGHT, BTYPE, ER_COST) |>
+  filter(BTYPE != 'X')
+  group_by(BTYPE) |>
+  mutate(dollarsSpent = sum(TABWEIGHT * ER_COST) / sum(TABWEIGHT)) |>
+  mutate(dollarsSpent = round(dollarsSpent, 2))
 
 g1 <- list(scope = 'usa', projection = list(type = 'albers usa'), showlakes = TRUE, lakecolor = toRGB("white"))
 
@@ -87,16 +96,20 @@ extensive$hover <- with(extensive, paste("State: ", extensive$REGSTATE, "<br>",
                                        "Average repair costs: $",
                                        extensive$dollarsSpent, sep = ""))
 
-averageRepairs <- plot_geo(dollars, locationmode = "USA-states") |>
+averageRepairsMap <- plot_geo(dollars, locationmode = "USA-states") |>
   add_trace(z = ~dollarsSpent, text = ~hover, locations = ~REGSTATE,
             color = ~dollarsSpent, colors = 'Blues',
             hoverinfo = "text") |>
   layout(geo = g1)
-averageRepairs
+averageRepairsMap
 
-extensiveRepairs <- plot_geo(extensive, locationmode = "USA-states") |>
+extensiveRepairsMap <- plot_geo(extensive, locationmode = "USA-states") |>
   add_trace(z = ~dollarsSpent, text = ~hover, locations = ~REGSTATE,
             color = ~dollarsSpent, colors = 'Blues',
             hoverinfo = "text") |>
   layout(geo = g1)
-extensiveRepairs
+extensiveRepairsMap
+
+averageRepairsBar <- plot_ly(dollarsBtype, color = I("blue")) |>
+  add_bars(x = ~BTYPE, y = ~dollarsSpent)
+averageRepairsBar
