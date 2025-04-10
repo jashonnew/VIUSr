@@ -1,5 +1,6 @@
 library(tidyverse)
 library(plotly)
+library(ggplot2)
 
 vius <- read_csv("data-raw/vius_2021_puf.csv")
 
@@ -54,6 +55,40 @@ vius <- vius |>
     TRUE ~ 0
   ))
 
+vius <- vius |>
+  filter(BTYPE != "X") |>
+  mutate(BTYPE = case_when(
+    BTYPE == "01" ~ "Pickup",
+    BTYPE == "02" ~ "Minvan",
+    BTYPE == "03" ~ "Other light van",
+    BTYPE == "04" ~ "Sport utility vehicle",
+    BTYPE == "05" ~ "Armored",
+    BTYPE == "06" ~ "Beverage or bay",
+    BTYPE == "07" ~ "Box truck",
+    BTYPE == "08" ~ "Concrete mixer",
+    BTYPE == "09" ~ "Concrete pumper",
+    BTYPE == "10" ~ "Conveyor bed",
+    BTYPE == "11" ~ "Crane",
+    BTYPE == "12" ~ "Dump",
+    BTYPE == "13" ~ "Flatbed, stake, or platform",
+    BTYPE == "14" ~ "Hooklift/roll-off",
+    BTYPE == "15" ~ "Logging",
+    BTYPE == "16" ~ "Service, utility",
+    BTYPE == "17" ~ "Service, other",
+    BTYPE == "18" ~ "Street sweeper",
+    BTYPE == "19" ~ "Tank, liquid or gases",
+    BTYPE == "20" ~ "Tow/wrecker",
+    BTYPE == "21" ~ "Trash, garbage, or recycling",
+    BTYPE == "22" ~ "Vacuum",
+    BTYPE == "23" ~ "Van, walk-in",
+    BTYPE == "24" ~ "Van, other",
+    BTYPE == "25" ~ "Wood chipper",
+    BTYPE == "26" ~ "Other",
+    BTYPE == "27" ~ "Not reported",
+    TRUE ~ NA_character_
+  ))
+
+
 dollars <- vius |>
   select(TABWEIGHT, REGSTATE, GM_COST) |>
   group_by(REGSTATE) |>
@@ -76,12 +111,13 @@ extensive <- vius |>
 
 extensiveBtype <- vius |>
   select(TABWEIGHT, BTYPE, ER_COST) |>
-  filter(BTYPE != 'X')
+  filter(BTYPE != 'X') |>
   group_by(BTYPE) |>
   mutate(dollarsSpent = sum(TABWEIGHT * ER_COST) / sum(TABWEIGHT)) |>
   mutate(dollarsSpent = round(dollarsSpent, 2))
 
-g1 <- list(scope = 'usa', projection = list(type = 'albers usa'), showlakes = TRUE, lakecolor = toRGB("white"))
+g1 <- list(scope = 'usa', projection = list(type = 'albers usa'),
+           showlakes = TRUE, lakecolor = toRGB("white"))
 
 miles$hover <- with(miles, paste("State: ", miles$REGSTATE, "<br>", "Miles: ",
                                  miles$totalMiles))
@@ -90,11 +126,12 @@ dollars$hover <- with(dollars, paste("State: ", dollars$REGSTATE, "<br>",
                                      "Average repair costs: $",
                                      dollars$dollarsSpent, sep = ""))
 
-extensive$hover <- with(extensive, paste("State: ", extensive$REGSTATE, "<br>",
-                                         "Vehicles requiring extensive repairs: ",
-                                         extensive$count, "<br>",
-                                       "Average repair costs: $",
-                                       extensive$dollarsSpent, sep = ""))
+extensive$hover <- with(extensive,
+                        paste("State: ", extensive$REGSTATE, "<br>",
+                              "Vehicles requiring extensive repairs: ",
+                              extensive$count, "<br>",
+                              "Average repair costs: $",
+                              extensive$dollarsSpent, sep = ""))
 
 averageRepairsMap <- plot_geo(dollars, locationmode = "USA-states") |>
   add_trace(z = ~dollarsSpent, text = ~hover, locations = ~REGSTATE,
