@@ -17,5 +17,5 @@ vius_clean <- subset(vius, GM_COST %in% names(code_to_value))
 # Apply the mapping
 vius_clean$GM_COST_NUM <- code_to_value[vius_clean$GM_COST]
 
-plot(vius_clean$GM_COST)
+plot(vius_clean$JU_HOMEBASE, vius_clean$GM_COST)
 
