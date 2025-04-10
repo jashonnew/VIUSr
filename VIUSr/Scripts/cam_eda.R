@@ -42,18 +42,61 @@ vius <- vius |>
     TRUE ~ 10000
   ))
 
+vius <- vius |>
+  filter(ER_COST != '7') |>
+  mutate(ER_COST = case_when(
+    ER_COST == '1' ~ 750,
+    ER_COST == '2' ~ 1500,
+    ER_COST == '3' ~ 3000,
+    ER_COST == '4' ~ 7500,
+    ER_COST == '5' ~ 15000,
+    ER_COST == '6' ~ 20000,
+    TRUE ~ 0
+  ))
+
 miles <- vius |>
   select(TABWEIGHT, REGSTATE, MILESANNL) |>
   group_by(REGSTATE) |>
   mutate(totalMiles = sum(TABWEIGHT * MILESANNL))
+
+dollars <- vius |>
+  select(TABWEIGHT, REGSTATE, GM_COST) |>
+  group_by(REGSTATE) |>
+  mutate(dollarsSpent = sum(TABWEIGHT * GM_COST) / sum(TABWEIGHT)) |>
+  mutate(dollarsSpent = round(dollarsSpent, 2))
+
+extensive <- vius |>
+  select(TABWEIGHT, REGSTATE, ER_COST) |>
+  filter(ER_COST > 0) |>
+  group_by(REGSTATE) |>
+  mutate(dollarsSpent = sum(TABWEIGHT * ER_COST) / sum(TABWEIGHT)) |>
+  mutate(dollarsSpent = round(dollarsSpent, 2), count = round(TABWEIGHT, 0))
 
 g1 <- list(scope = 'usa', projection = list(type = 'albers usa'), showlakes = TRUE, lakecolor = toRGB("white"))
 
 miles$hover <- with(miles, paste("State: ", miles$REGSTATE, "<br>", "Miles: ",
                                  miles$totalMiles))
 
-fig1 <- plot_geo(miles, locationmode = "USA-states") |>
-  add_trace(z = ~totalMiles, text = ~hover, locations = ~REGSTATE,
-            color = ~totalMiles, colors = 'Blues',
+dollars$hover <- with(dollars, paste("State: ", dollars$REGSTATE, "<br>",
+                                     "Average repair costs: $",
+                                     dollars$dollarsSpent, sep = ""))
+
+extensive$hover <- with(extensive, paste("State: ", extensive$REGSTATE, "<br>",
+                                         "Vehicles requiring extensive repairs: ",
+                                         extensive$count, "<br>",
+                                       "Average repair costs: $",
+                                       extensive$dollarsSpent, sep = ""))
+
+averageRepairs <- plot_geo(dollars, locationmode = "USA-states") |>
+  add_trace(z = ~dollarsSpent, text = ~hover, locations = ~REGSTATE,
+            color = ~dollarsSpent, colors = 'Blues',
             hoverinfo = "text") |>
   layout(geo = g1)
+averageRepairs
+
+extensiveRepairs <- plot_geo(extensive, locationmode = "USA-states") |>
+  add_trace(z = ~dollarsSpent, text = ~hover, locations = ~REGSTATE,
+            color = ~dollarsSpent, colors = 'Blues',
+            hoverinfo = "text") |>
+  layout(geo = g1)
+extensiveRepairs
