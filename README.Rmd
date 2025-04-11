@@ -41,7 +41,7 @@ You can install the development version of VIUSr from [GitHub](https://github.co
 
 ``` r
 # install.packages("pak")
-pak::pak("jashonnew/VIUSr_rfDSP_Final_Project")
+pak::pak("jashonnew/VIUSr")
 ```
 
 ## Example
