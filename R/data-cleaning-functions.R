@@ -31,7 +31,7 @@ drop_bad_values <- function(df){
 #' @return The vius data with numeric vectors
 #'
 #' @export
-chatToNum <- function(df){
+charToNum <- function(df){
   df$MODELYEAR <- str_replace_all(df$MODELYEAR, "P", "") |>
     as.numeric()
   df <- df |>
@@ -80,4 +80,79 @@ chatToNum <- function(df){
       TRUE ~ 0
     ))
 
+}
+
+#' Convert Codes to Names
+#'
+#' Converts the VIUS specific codes for certain categorical variables into user
+#' understandably names.
+#'
+#' @param df The vius data frame with codes for variables, must not include NAs
+#'
+#' @return The vius data with useful columns
+#'
+#' @export
+names <- function(df){
+  # Define PRIMPROD labels (from data dictionary)
+  primprod_labels <- c(
+    "01" = "Animals and fish, live",
+    "02" = "Animal feed and animal products",
+    "03" = "Grains, cereal",
+    "04" = "Other agricultural products",
+    "05" = "Basic chemicals",
+    "06" = "Fertilizers",
+    "07" = "Pharmaceuticals",
+    "08" = "Other chemical products",
+    "09" = "Alcoholic beverages",
+    "10" = "Bakery/grain products",
+    "11" = "Meat and seafood",
+    "12" = "Tobacco products",
+    "13" = "Other prepared foodstuffs",
+    "14" = "Logs and raw wood",
+    "15" = "Paper articles",
+    "16" = "Printed products",
+    "17" = "Pulp and paper",
+    "18" = "Wood products",
+    "19" = "Articles of base metal",
+    "20" = "Base metal forms",
+    "21" = "Nonmetallic mineral products",
+    "22" = "Electronics and electrical",
+    "23" = "Furniture and lamps",
+    "24" = "Machinery",
+    "25" = "Miscellaneous manufactured",
+    "26" = "Precision instruments",
+    "27" = "Textiles and leather",
+    "28" = "Vehicles and parts",
+    "29" = "Other transportation equipment",
+    "30" = "Coal",
+    "31" = "Crude petroleum",
+    "32" = "Gravel or stone",
+    "33" = "Metallic ores",
+    "34" = "Building stone",
+    "35" = "Natural sands",
+    "36" = "Other nonmetallic minerals",
+    "37" = "Fuel oils",
+    "38" = "Gasoline and blends",
+    "39" = "Aviation fuel and kerosene",
+    "40" = "Ethanol blends",
+    "41" = "Plastics and rubber",
+    "42" = "Other petroleum products",
+    "43" = "Hazardous waste",
+    "44" = "Other waste and scrap",
+    "45" = "Recyclable products",
+    "46" = "Mail and parcels",
+    "47" = "Empty containers",
+    "48" = "Mixed freight"
+  )
+  if (any(vius$PRIMPROD == "X")){
+    stop("Must remove useless values first(run drop_bad_values)")
+  }
+  vius |>
+    mutate(
+      PRIMPROD = as.numeric(PRIMPROD),
+      PRIMPROD_LABEL = factor(
+        primprod_labels[as.character(PRIMPROD)],
+        levels = unique(primprod_labels)
+      )
+    )
 }
