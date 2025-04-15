@@ -10,7 +10,7 @@
 #' @export
 drop_bad_values <- function(df){
   df <- df |>
-    filter(
+    dplyr::filter(
       !is.na(PRIMPROD),
       !is.na(REGSTATE),
       !is.na(TABWEIGHT),
@@ -32,12 +32,12 @@ drop_bad_values <- function(df){
 #'
 #' @export
 charToNum <- function(df){
-  df$MODELYEAR <- str_replace_all(df$MODELYEAR, "P", "") |>
+  df$MODELYEAR <- stringr::str_replace_all(df$MODELYEAR, "P", "") |>
     as.numeric()
   df <- df |>
-    filter(AVGWEIGHT != "X") |>
-    mutate(AVGWEIGHT = as.numeric(AVGWEIGHT)) |>
-    mutate(AVGWEIGHT = case_when(
+    dplyr::filter(AVGWEIGHT != "X") |>
+    dplyr::mutate(AVGWEIGHT = as.numeric(AVGWEIGHT)) |>
+    dplyr::mutate(AVGWEIGHT = case_when(
       AVGWEIGHT == 1 ~ 3000,
       AVGWEIGHT == 2 ~ 7250,
       AVGWEIGHT == 3 ~ 9250,
@@ -56,9 +56,9 @@ charToNum <- function(df){
     ))
 
   df <- df |>
-    filter(GM_COST != 'X' & GM_COST != '8') |>
-    mutate(GM_COST = as.numeric(GM_COST)) |>
-    mutate(GM_COST = case_when(
+    dplyr::filter(GM_COST != 'X' & GM_COST != '8') |>
+    dplyr::mutate(GM_COST = as.numeric(GM_COST)) |>
+    dplyr::mutate(GM_COST = case_when(
       GM_COST == 1 ~ 50,
       GM_COST == 2 ~ 250,
       GM_COST == 3 ~ 750,
@@ -69,8 +69,8 @@ charToNum <- function(df){
     ))
 
   df <- df |>
-    filter(ER_COST != '7') |>
-    mutate(ER_COST = case_when(
+    dplyr::filter(ER_COST != '7') |>
+    dplyr::mutate(ER_COST = case_when(
       ER_COST == '1' ~ 750,
       ER_COST == '2' ~ 1500,
       ER_COST == '3' ~ 3000,
@@ -148,7 +148,7 @@ names <- function(df){
     stop("Must remove useless values first(run drop_bad_values)")
   }
   vius |>
-    mutate(
+    dplyr::mutate(
       PRIMPROD = as.numeric(PRIMPROD),
       PRIMPROD_LABEL = factor(
         primprod_labels[as.character(PRIMPROD)],
