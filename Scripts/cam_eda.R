@@ -119,9 +119,6 @@ extensiveBtype <- vius |>
 g1 <- list(scope = 'usa', projection = list(type = 'albers usa'),
            showlakes = TRUE, lakecolor = toRGB("white"))
 
-miles$hover <- with(miles, paste("State: ", miles$REGSTATE, "<br>", "Miles: ",
-                                 miles$totalMiles))
-
 dollars$hover <- with(dollars, paste("State: ", dollars$REGSTATE, "<br>",
                                      "Average repair costs: $",
                                      dollars$dollarsSpent, sep = ""))
