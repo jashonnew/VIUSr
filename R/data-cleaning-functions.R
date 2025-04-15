@@ -143,15 +143,48 @@ names <- function(df){
     "47" = "Empty containers",
     "48" = "Mixed freight"
   )
-  if (any(vius$PRIMPROD == "X")){
+  if (any(df$PRIMPROD == "X")){
     stop("Must remove useless values first(run drop_bad_values)")
   }
-  vius <- dplyr::mutate(vius,
+  df <- dplyr::mutate(df,
                       PRIMPROD = factor(
                         primprod_labels[as.character(df$PRIMPROD)],
                         levels = primprod_labels
                       )
   )
-  
-  return(vius)
+
+  df <- df |>
+    filter(BTYPE != "X") |>
+    mutate(BTYPE = case_when(
+      BTYPE == "01" ~ "Pickup",
+      BTYPE == "02" ~ "Minvan",
+      BTYPE == "03" ~ "Other light van",
+      BTYPE == "04" ~ "Sport utility vehicle",
+      BTYPE == "05" ~ "Armored",
+      BTYPE == "06" ~ "Beverage or bay",
+      BTYPE == "07" ~ "Box truck",
+      BTYPE == "08" ~ "Concrete mixer",
+      BTYPE == "09" ~ "Concrete pumper",
+      BTYPE == "10" ~ "Conveyor bed",
+      BTYPE == "11" ~ "Crane",
+      BTYPE == "12" ~ "Dump",
+      BTYPE == "13" ~ "Flatbed, stake, or platform",
+      BTYPE == "14" ~ "Hooklift/roll-off",
+      BTYPE == "15" ~ "Logging",
+      BTYPE == "16" ~ "Service, utility",
+      BTYPE == "17" ~ "Service, other",
+      BTYPE == "18" ~ "Street sweeper",
+      BTYPE == "19" ~ "Tank, liquid or gases",
+      BTYPE == "20" ~ "Tow/wrecker",
+      BTYPE == "21" ~ "Trash, garbage, or recycling",
+      BTYPE == "22" ~ "Vacuum",
+      BTYPE == "23" ~ "Van, walk-in",
+      BTYPE == "24" ~ "Van, other",
+      BTYPE == "25" ~ "Wood chipper",
+      BTYPE == "26" ~ "Other",
+      BTYPE == "27" ~ "Not reported",
+      TRUE ~ NA_character_
+    ))
+
+  return(df)
 }
