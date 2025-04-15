@@ -15,8 +15,7 @@ drop_bad_values <- function(df){
       !is.na(REGSTATE),
       !is.na(TABWEIGHT),
       PRIMPROD != "X",
-      PRIMPROD != "98",  # Remove 'Other unlisted products'
-      PRIMPROD != "99",  # Remove 'Not reported'
+      PRIMPROD != "50",
       PRIMPROD != "49"   # NEW: Remove unknown or undefined PRIMPROD code
     )
 }
@@ -147,12 +146,12 @@ names <- function(df){
   if (any(vius$PRIMPROD == "X")){
     stop("Must remove useless values first(run drop_bad_values)")
   }
-  vius |>
-    dplyr::mutate(
-      PRIMPROD = as.numeric(PRIMPROD),
-      PRIMPROD_LABEL = factor(
-        primprod_labels[as.character(PRIMPROD)],
-        levels = unique(primprod_labels)
-      )
-    )
+  vius <- dplyr::mutate(vius,
+                      PRIMPROD = factor(
+                        primprod_labels[as.character(df$PRIMPROD)],
+                        levels = primprod_labels
+                      )
+  )
+  
+  return(vius)
 }

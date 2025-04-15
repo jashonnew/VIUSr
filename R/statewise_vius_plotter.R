@@ -19,30 +19,39 @@
 #'
 #' @return No return value. The function produces plots
 #' @export
-getStateGraphs <- function(dataset, dbHeader, states = NULL, plotTitle = "title",
+getStateGraphs <- function(dataset, dbHeader, states = NULL, plotTitle = "State - ",
                            xPlotLabel = "x axis", yPlotLabel = "y axis",
                            sleepTime = 2) {
-  # Select relevant columns
-  custom_data <- dataset %>%
-    dplyr::select(TABWEIGHT, REGSTATE, dbHeader)
-
-  # Determine states to plot
+  # Convert column name from string to symbol
+  dbHeader_sym <- rlang::sym(dbHeader)
+  
+  # Select only needed columns
+  custom_data <- dplyr::select(dataset, tidyselect::all_of(c("TABWEIGHT", "REGSTATE", dbHeader)))
+  
+  # Determine which states to process
   selected_states <- if (is.null(states)) {
     sort(unique(custom_data$REGSTATE))
   } else {
     states
   }
-
+  
   for (state in selected_states) {
-    state_data <- custom_data %>%
-      dplyr::filter(REGSTATE == state, !is.na({{ dbHeader }}), !is.na(TABWEIGHT))
-
+    state_data <- dplyr::filter(custom_data, REGSTATE == state,
+                                !is.na(.data[[dbHeader]]),
+                                !is.na(TABWEIGHT))
+    
     summary_data <- state_data %>%
-      dplyr::group_by({{ dbHeader }}) %>%
+      dplyr::group_by(!!dbHeader_sym) %>%
       dplyr::summarise(estimated_vehicles = sum(TABWEIGHT), .groups = "drop") %>%
-      dplyr::arrange(desc(estimated_vehicles))
-
-    p <- ggplot2::ggplot(summary_data, aes(x = reorder({{ dbHeader }}, estimated_vehicles), y = estimated_vehicles, fill = {{ dbHeader }})) +
+      dplyr::arrange(dplyr::desc(estimated_vehicles))
+    
+    # Convert to factor for categorical coloring
+    summary_data[[dbHeader]] <- as.factor(summary_data[[dbHeader]])
+    
+    p <- ggplot2::ggplot(summary_data,
+                         ggplot2::aes(x = stats::reorder(!!dbHeader_sym, estimated_vehicles),
+                                      y = estimated_vehicles,
+                                      fill = !!dbHeader_sym)) +
       ggplot2::geom_bar(stat = "identity") +
       ggplot2::coord_flip() +
       ggplot2::labs(
@@ -51,19 +60,22 @@ getStateGraphs <- function(dataset, dbHeader, states = NULL, plotTitle = "title"
         y = yPlotLabel,
         fill = xPlotLabel
       ) +
+      ggplot2::scale_fill_manual(
+        values = grDevices::topo.colors(length(unique(summary_data[[dbHeader]])))
+      ) +
       ggplot2::theme_minimal(base_size = 13) +
       ggplot2::theme(
-        plot.title = element_text(color = "white"),
-        axis.title = element_text(color = "white"),
-        axis.text = element_text(color = "white"),
+        plot.title = ggplot2::element_text(color = "white"),
+        axis.title = ggplot2::element_text(color = "white"),
+        axis.text = ggplot2::element_text(color = "white", size = 9),
         legend.position = "none",
-        panel.grid.major = element_line(color = "gray30"),
-        panel.grid.minor = element_blank(),
-        panel.background = element_rect(fill = "black"),
-        plot.background = element_rect(fill = "black")
+        panel.grid.major = ggplot2::element_line(color = "gray30"),
+        panel.grid.minor = ggplot2::element_blank(),
+        panel.background = ggplot2::element_rect(fill = "black"),
+        plot.background = ggplot2::element_rect(fill = "black")
       )
-
+    
     print(p)
-    Sys.sleep(sleepTime)
+    base::Sys.sleep(sleepTime)
   }
 }
