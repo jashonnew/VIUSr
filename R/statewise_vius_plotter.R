@@ -81,6 +81,8 @@ getStateGraphs <- function(dataset, dbHeader, states = NULL, plotTitle = "State 
 }
 
 getStateMaps <- function(vius, var, var_label = "Value") {
+  var <- enquo(var)
+
   # Set geographic projection data
   geo1 <- list(scope = 'usa', projection = list(type = 'albers usa'),
                showlakes = TRUE, lakecolor = plotly::toRGB("white"))
@@ -92,13 +94,14 @@ getStateMaps <- function(vius, var, var_label = "Value") {
     dplyr::mutate(total = round(total, 2))
 
   # Create the template for the map's hover box
-  custom_data$hover <- with(custom_data, paste("State: ", custom_data$REGSTATE),
-                            "<br>", var_label, ": ", custom_data$var, sep = "")
+  custom_data$hover <- with(custom_data, paste("State: ", custom_data$REGSTATE,
+                            "<br>", var_label, ": ",
+                            custom_data$total, sep = ""))
 
   # Create the map of the country with the specified variable
   state_map <- plotly::plot_geo(custom_data, locationmode = "USA-states") |>
-    plotly::add_trace(z = ~{{ var }}, text = ~hover, locations = ~REGSTATE,
-                      color = ~{{ var }}, colors = 'Blues', hoverinfo = "text") |>
+    plotly::add_trace(z = ~total, text = ~hover, locations = ~REGSTATE,
+                      color = ~total, colors = 'Blues', hoverinfo = "text") |>
     plotly::layout(geo = geo1)
   state_map
 }
