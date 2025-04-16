@@ -80,6 +80,7 @@ getStateGraphs <- function(dataset, dbHeader, states = NULL, plotTitle = "State 
   }
 }
 
+
 getStateMaps <- function(vius, var, var_label = "Value") {
   # Set geographic projection data
   geo1 <- list(scope = 'usa', projection = list(type = 'albers usa'),

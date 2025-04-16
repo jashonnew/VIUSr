@@ -56,17 +56,17 @@ charToNum <- function(df){
 
 }
 
-#' Convert Codes to Names
+#' Convert Codes to correct charater values
 #'
 #' Converts the VIUS specific codes for certain categorical variables into user
-#' understandably names.
+#' understandable characters.
 #'
 #' @param df The vius data frame with codes for variables, must not include NAs
 #'
 #' @return The vius data with useful columns
 #'
 #' @export
-names <- function(df){
+convert_names <- function(df){
   # Define PRIMPROD labels (from data dictionary)
   primprod_labels <- c(
     "01" = "Animals and fish, live",
