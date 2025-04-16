@@ -1,25 +1,3 @@
-#' Drop Bad Values from a Data Frame
-#'
-#' This function scans the provided data frame for values in vius data sets that
-#' are not useful and removes them.
-#'
-#' @param df A vius dataframe to be cleaned
-#'
-#' @return The cleaned vius dataframe
-#'
-#' @export
-drop_bad_values <- function(df){
-  df <- df |>
-    dplyr::filter(
-      !is.na(PRIMPROD),
-      !is.na(REGSTATE),
-      !is.na(TABWEIGHT),
-      PRIMPROD != "X",
-      PRIMPROD != "50",
-      PRIMPROD != "49"   # NEW: Remove unknown or undefined PRIMPROD code
-    )
-}
-
 #' Character to Numeric Data Frame
 #'
 #' Takes certain character columns in the vius data and transforms them into
@@ -34,7 +12,6 @@ charToNum <- function(df){
   df$MODELYEAR <- stringr::str_replace_all(df$MODELYEAR, "P", "") |>
     as.numeric()
   df <- df |>
-    dplyr::filter(AVGWEIGHT != "X") |>
     dplyr::mutate(AVGWEIGHT = as.numeric(AVGWEIGHT)) |>
     dplyr::mutate(AVGWEIGHT = case_when(
       AVGWEIGHT == 1 ~ 3000,
@@ -55,7 +32,6 @@ charToNum <- function(df){
     ))
 
   df <- df |>
-    dplyr::filter(GM_COST != 'X' & GM_COST != '8') |>
     dplyr::mutate(GM_COST = as.numeric(GM_COST)) |>
     dplyr::mutate(GM_COST = case_when(
       GM_COST == 1 ~ 50,
@@ -68,7 +44,6 @@ charToNum <- function(df){
     ))
 
   df <- df |>
-    dplyr::filter(ER_COST != '7') |>
     dplyr::mutate(ER_COST = case_when(
       ER_COST == '1' ~ 750,
       ER_COST == '2' ~ 1500,
@@ -143,9 +118,6 @@ names <- function(df){
     "47" = "Empty containers",
     "48" = "Mixed freight"
   )
-  if (any(df$PRIMPROD == "X")){
-    stop("Must remove useless values first(run drop_bad_values)")
-  }
   df <- dplyr::mutate(df,
                       PRIMPROD = factor(
                         primprod_labels[as.character(df$PRIMPROD)],
@@ -154,7 +126,6 @@ names <- function(df){
   )
 
   df <- df |>
-    filter(BTYPE != "X") |>
     mutate(BTYPE = case_when(
       BTYPE == "01" ~ "Pickup",
       BTYPE == "02" ~ "Minvan",

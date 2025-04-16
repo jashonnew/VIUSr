@@ -3,9 +3,6 @@
 
 vius <- read.csv("data-raw/vius_2021_puf.csv")
 
-#Remove values for vehicles that do not apply to the variables of interest.
-vius <- drop_bad_values(vius)
-
 #Change certain character columns to numeric for dynamic plotting.
 vius <- charToNum(vius)
 
