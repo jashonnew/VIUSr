@@ -2,6 +2,11 @@
 
 vius <- readr::read_csv("data-raw/vius_2021_puf.csv")
 
+vius <- vius |>
+  select(ID, TABWEIGHT, REGSTATE, ACQUIREYEAR, AVGWEIGHT, BTYPE, ER_COST,
+         FUELTYPE, GM_COST, KINDOFBUS, MILESANNL, MILESLIFE, MODELYEAR, MPG,
+         PRIMCOMMACT, PRIMPROD, TRIPOFFROAD)
+
 vius$MODELYEAR <- stringr::str_replace_all(vius$MODELYEAR, "P", "") |>
   as.numeric()
 
