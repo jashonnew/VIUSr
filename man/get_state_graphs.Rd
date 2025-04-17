@@ -15,6 +15,8 @@ get_state_graphs(
 )
 }
 \arguments{
+\item{dataset}{The cleaned VIUS object to be mapped}
+
 \item{db_header}{A column from the dataset used for grouping.}
 
 \item{states}{A vector of state abbreviations or FIPS codes to include in

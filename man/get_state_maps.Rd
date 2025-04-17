@@ -38,11 +38,3 @@ States and the label for the variable. Then, when the user hovers over a
 state with their cursor, the map will display the state and the
 corresponding value of the variable for that state.
 }
-\examples{
-get_state_maps(vius, var = MILESANNL, var_label = "Average annual miles")
-get_state_maps(vius,
-  var = GM_COST,
-  var_label = "Average amount spent on general maintenance",
-  dollars = TRUE
-)
-}

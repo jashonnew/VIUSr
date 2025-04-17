@@ -15,6 +15,7 @@
 #' @param y_plot_label A character string specifying the label for the y-axis.
 #' @param sleep_time Time in seconds to pause between plots. Default is 2
 #'    seconds.
+#' @param dataset The cleaned VIUS object to be mapped
 #'
 #'
 #' @return No return value. The function produces plots
@@ -117,13 +118,6 @@ get_state_graphs <- function(dataset, db_header, states = NULL,
 #'   character to the value when displayed on the map.
 #' @returns A plotly map of the United States with darker states representing
 #'   higher values of the selected variable.
-#' @examples
-#' get_state_maps(vius, var = MILESANNL, var_label = "Average annual miles")
-#' get_state_maps(vius,
-#'   var = GM_COST,
-#'   var_label = "Average amount spent on general maintenance",
-#'   dollars = TRUE
-#' )
 #' @export
 get_state_maps <- function(vius, var, var_label = "Value", dollars = FALSE) {
   var <- rlang::enquo(var)
