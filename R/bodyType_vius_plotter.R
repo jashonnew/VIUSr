@@ -10,5 +10,10 @@ get_btype_graphs <- function(vius1, var, plot_title = "Title",
     dplyr::mutate({{ var }} := as.numeric({{ var }})) |>
     dplyr::mutate(total = sum(TABWEIGHT * {{ var }}) / sum(TABWEIGHT)) |>
     dplyr::mutate(total = round(total, 2))
-  custom_data
+  ggplot(custom_data, aes(x = BTYPE, y = weighted_avg)) +
+    geom_col(fill = "steelblue") +
+    labs(title = plot_title,
+         x = x_plot_label,
+         y = y_plot_label) +
+    theme_minimal()
 }
