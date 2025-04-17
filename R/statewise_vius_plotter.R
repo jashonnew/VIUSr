@@ -4,29 +4,33 @@
 #' by state and a user-specified column, then creates horizontal bar plots of
 #' estimated vehicle counts for each state.
 #'
-#' @param dbHeader A column from the dataset used for grouping.
+#' @param db_header A column from the dataset used for grouping.
 #' @param states A vector of state abbreviations or FIPS codes to include in
 #'    the plots. If `NULL` (default), plots will be generated for all available
 #'    states in the dataset.
-#' @param plotTitle A character string used as the title prefix for each
+#' @param plot_title A character string used as the title prefix for each
 #'    state-level plot.
-#' @param xPlotLabel A character string specifying the label for the x-axis
+#' @param x_plot_label A character string specifying the label for the x-axis
 #'    (which will appear vertically due to `coord_flip`).
-#' @param yPlotLabel A character string specifying the label for the y-axis.
-#' @param sleepTime Time in seconds to pause between plots. Default is 2
+#' @param y_plot_label A character string specifying the label for the y-axis.
+#' @param sleep_time Time in seconds to pause between plots. Default is 2
 #'    seconds.
 #'
 #'
 #' @return No return value. The function produces plots
 #' @export
-get_state_graphs <- function(dataset, dbHeader, states = NULL, plotTitle = "State - ",
-                             xPlotLabel = "x axis", yPlotLabel = "y axis",
-                             sleepTime = 2) {
+get_state_graphs <- function(dataset, db_header, states = NULL,
+                             plot_title = "State - ",
+                             x_plot_label = "x axis", y_plot_label = "y axis",
+                             sleep_time = 2) {
   # Convert column name from string to symbol
-  db_header_sym <- rlang::sym(dbHeader)
+  db_header_sym <- rlang::sym(db_header)
 
   # Select only needed columns
-  custom_data <- dplyr::select(dataset, tidyselect::all_of(c("TABWEIGHT", "REGSTATE", dbHeader)))
+  custom_data <- dplyr::select(dataset,
+                               tidyselect::all_of(c("TABWEIGHT",
+                                                    "REGSTATE",
+                                                    db_header)))
 
   # Determine which states to process
   selected_states <- if (is.null(states)) {
@@ -38,36 +42,37 @@ get_state_graphs <- function(dataset, dbHeader, states = NULL, plotTitle = "Stat
   for (state in selected_states) {
     state_data <- dplyr::filter(
       custom_data, REGSTATE == state,
-      !is.na(.data[[dbHeader]]),
+      !is.na(.data[[db_header]]),
       !is.na(TABWEIGHT)
     )
 
-    summary_data <- state_data %>%
-      dplyr::group_by(!!dbHeader_sym) %>%
-      dplyr::summarise(estimated_vehicles = sum(TABWEIGHT), .groups = "drop") %>%
+    summary_data <- state_data |>
+      dplyr::group_by(!!db_header_sym) |>
+      dplyr::summarise(estimated_vehicles = sum(TABWEIGHT), .groups = "drop") |>
       dplyr::arrange(dplyr::desc(estimated_vehicles))
 
     # Convert to factor for categorical coloring
-    summary_data[[dbHeader]] <- as.factor(summary_data[[dbHeader]])
+    summary_data[[db_header]] <- as.factor(summary_data[[db_header]])
 
     p <- ggplot2::ggplot(
       summary_data,
       ggplot2::aes(
-        x = stats::reorder(!!dbHeader_sym, estimated_vehicles),
+        x = stats::reorder(!!db_header_sym, estimated_vehicles),
         y = estimated_vehicles,
-        fill = !!dbHeader_sym
+        fill = !!db_header_sym
       )
     ) +
       ggplot2::geom_bar(stat = "identity") +
       ggplot2::coord_flip() +
       ggplot2::labs(
-        title = paste(plotTitle, state),
-        x = xPlotLabel,
-        y = yPlotLabel,
-        fill = xPlotLabel
+        title = paste(plot_title, state),
+        x = x_plot_label,
+        y = y_plot_label,
+        fill = x_plot_label
       ) +
       ggplot2::scale_fill_manual(
-        values = grDevices::topo.colors(length(unique(summary_data[[dbHeader]])))
+        values = grDevices::
+          topo.colors(length(unique(summary_data[[db_header]])))
       ) +
       ggplot2::theme_minimal(base_size = 13) +
       ggplot2::theme(
@@ -82,7 +87,7 @@ get_state_graphs <- function(dataset, dbHeader, states = NULL, plotTitle = "Stat
       )
 
     print(p)
-    base::Sys.sleep(sleepTime)
+    base::Sys.sleep(sleep_time)
   }
 }
 

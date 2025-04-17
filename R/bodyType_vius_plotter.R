@@ -1,5 +1,9 @@
-get_btype_graphs <- function(vius1, var, plotTitle = "Title",
-                             xPlotLabel = "x axis", yPlotLabel = "y axis") {
+utils::globalVariables(c(TABWEIGHT, BTYPE))
+
+#'
+
+get_btype_graphs <- function(vius1, var, plot_title = "Title",
+                             x_plot_label = "x axis", y_plot_label = "y axis") {
   # Introduce tabweight to get estimate of real population
   custom_data <- vius1 |>
     dplyr::select(TABWEIGHT, BTYPE, {{ var }}) |>

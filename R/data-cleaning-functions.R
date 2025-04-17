@@ -156,5 +156,5 @@ convert_names <- function(df) {
       TRUE ~ NA_character_
     ))
 
-  return(df)
+  df
 }
