@@ -80,6 +80,7 @@ getStateGraphs <- function(dataset, dbHeader, states = NULL, plotTitle = "State 
   }
 }
 
+<<<<<<< HEAD
 #' Create a heatmap of the Unites States
 #'
 #' This function creates an interactive map of the United States. The color of
