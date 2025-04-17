@@ -118,8 +118,8 @@ get_state_graphs <- function(dataset, db_header, states = NULL,
 #' @returns A plotly map of the United States with darker states representing
 #'   higher values of the selected variable.
 #' @examples
-#' getStateMaps(vius, var = MILESANNL, var_label = "Average annual miles")
-#' getStateMaps(vius,
+#' get_state_maps(vius, var = MILESANNL, var_label = "Average annual miles")
+#' get_state_maps(vius,
 #'   var = GM_COST,
 #'   var_label = "Average amount spent on general maintenance",
 #'   dollars = TRUE
