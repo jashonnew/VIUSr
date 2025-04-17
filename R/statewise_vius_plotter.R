@@ -80,7 +80,39 @@ getStateGraphs <- function(dataset, dbHeader, states = NULL, plotTitle = "State 
   }
 }
 
-getStateMaps <- function(vius, var, var_label = "Value") {
+#' Create a heatmap of the Unites States
+#'
+#' This function creates an interactive map of the United States. The color of
+#'   each state in the map will depend on a variable available in the VIUS
+#'   dataset. The user can select which variable to map out across the United
+#'   States and the label for the variable. Then, when the user hovers over a
+#'   state with their cursor, the map will display the state and the
+#'   corresponding value of the variable for that state.
+#'
+#' @param vius The VIUS dataset. This should be a reference to the cleaned VIUS
+#'   dataset available within the VIUSr package.
+#' @param var The column of the VIUS dataset. Must be a column of numeric
+#'   values in the cleaned VIUS dataset available within the VIUSr package.
+#'   Options are AVGWEIGHT (average vehicle weight), ER_COST (average cost of
+#'   extensive vehicle repairs), GM_COST (average cost of general vehicle
+#'   maintenance), MILESANNL (average miles traveled per vehicle in the year
+#'   of the survey), MILESLIFE (average miles traveled per vehicle since the
+#'   vehicle was manufactured), MPG (average miles per gallon), TRIPOFFROAD
+#'   (The average percentage of miles driven off-road per vehicle)
+#' @param var_label A string representing the label the user would like to see
+#'   on the map for the value of the selected variable. If no value is entered,
+#'   the label will simply say "value."
+#' @param dollars A boolean value. Defaults to False. If true, will append a "$"
+#'   character to the value when displayed on the map.
+#' @returns A plotly map of the United States with darker states representing
+#'   higher values of the selected variable.
+#' @examples
+#' getStateMaps(vius, var = MILESANNL, var_label = "Average annual miles")
+#' getStateMaps(vius, var = GM_COST,
+#'              var_label = "Average amount spent on general maintenance",
+#'              dollars = TRUE)
+#' @export
+getStateMaps <- function(vius, var, var_label = "Value", dollars = FALSE) {
   var <- enquo(var)
 
   # Set geographic projection data
@@ -89,14 +121,24 @@ getStateMaps <- function(vius, var, var_label = "Value") {
 
   custom_data <- vius |>
     dplyr::select(TABWEIGHT, REGSTATE, {{ var }}) |>
+    dplyr::filter(is.numeric({{ var }})) |>
+    dplyr::filter({{ var }} > 0) |>
     dplyr::group_by(REGSTATE) |>
     dplyr::mutate(total = sum(TABWEIGHT * {{ var }}) / sum(TABWEIGHT)) |>
     dplyr::mutate(total = round(total, 2))
 
   # Create the template for the map's hover box
-  custom_data$hover <- with(custom_data, paste("State: ", custom_data$REGSTATE,
-                            "<br>", var_label, ": ",
-                            custom_data$total, sep = ""))
+  if (dollars) {
+    custom_data$hover <- with(custom_data,
+                              paste("State: ", custom_data$REGSTATE,
+                                    "<br>", var_label, ": $", custom_data$total,
+                                    sep = ""))
+  } else {
+    custom_data$hover <- with(custom_data,
+                              paste("State: ", custom_data$REGSTATE,
+                                    "<br>", var_label, ": ", custom_data$total,
+                                    sep = ""))
+  }
 
   # Create the map of the country with the specified variable
   state_map <- plotly::plot_geo(custom_data, locationmode = "USA-states") |>
