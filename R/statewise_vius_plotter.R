@@ -113,7 +113,7 @@ getStateGraphs <- function(dataset, dbHeader, states = NULL, plotTitle = "State 
 #'              dollars = TRUE)
 #' @export
 getStateMaps <- function(vius, var, var_label = "Value", dollars = FALSE) {
-  var <- enquo(var)
+  var <- rlang::enquo(var)
 
   # Set geographic projection data
   geo1 <- list(scope = 'usa', projection = list(type = 'albers usa'),
