@@ -8,7 +8,7 @@
 #' @return The vius data with numeric vectors
 #'
 #' @export
-charToNum <- function(df){
+char_to_num <- function(df) {
   df$MODELYEAR <- stringr::str_replace_all(df$MODELYEAR, "P", "") |>
     as.numeric()
   df <- df |>
@@ -45,15 +45,14 @@ charToNum <- function(df){
 
   df <- df |>
     dplyr::mutate(ER_COST = case_when(
-      ER_COST == '1' ~ 750,
-      ER_COST == '2' ~ 1500,
-      ER_COST == '3' ~ 3000,
-      ER_COST == '4' ~ 7500,
-      ER_COST == '5' ~ 15000,
-      ER_COST == '6' ~ 20000,
+      ER_COST == "1" ~ 750,
+      ER_COST == "2" ~ 1500,
+      ER_COST == "3" ~ 3000,
+      ER_COST == "4" ~ 7500,
+      ER_COST == "5" ~ 15000,
+      ER_COST == "6" ~ 20000,
       TRUE ~ 0
     ))
-
 }
 
 #' Convert Codes to correct charater values
@@ -66,7 +65,7 @@ charToNum <- function(df){
 #' @return The vius data with useful columns
 #'
 #' @export
-convert_names <- function(df){
+convert_names <- function(df) {
   # Define PRIMPROD labels (from data dictionary)
   primprod_labels <- c(
     "01" = "Animals and fish, live",
@@ -119,10 +118,10 @@ convert_names <- function(df){
     "48" = "Mixed freight"
   )
   df <- dplyr::mutate(df,
-                      PRIMPROD = factor(
-                        primprod_labels[as.character(df$PRIMPROD)],
-                        levels = primprod_labels
-                      )
+    PRIMPROD = factor(
+      primprod_labels[as.character(df$PRIMPROD)],
+      levels = primprod_labels
+    )
   )
 
   df <- df |>

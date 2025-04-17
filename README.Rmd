@@ -13,7 +13,6 @@ knitr::opts_chunk$set(
 )
 ```
 
-did i fix it now
 
 # VIUSr
 
@@ -38,11 +37,10 @@ did i fix it now
 
 ## Installation
 
-You can install the development version of VIUSr from [GitHub](https://github.com/) with:
+You can install the development version of VIUSr from [jashonnew/VIUSr](https://github.com/jashonnew/VIUSr) with:
 
 ``` r
-# install.packages("pak")
-pak::pak("jashonnew/VIUSr")
+install.packages("jashonnew/VIUSr")
 ```
 
 ## Example
@@ -50,7 +48,7 @@ pak::pak("jashonnew/VIUSr")
 This is a basic example which shows you how to solve a common problem:
 
 ```{r example}
-#library(VIUSr)
+library(VIUSr)
 ## basic example code
 ```
 

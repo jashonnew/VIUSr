@@ -1,9 +1,14 @@
 Package: VIUSr
-Title: What the Package Does (One Line, Title Case)
+Title: VIUSr: Tools for Cleaning, Exploring, and Visualizing the 2021 Vehicle Inventory and Use Survey (VIUS) Data
 Version: 0.0.0.9000
 Authors@R: 
     person("First", "Last", , "first.last@example.com", role = c("aut", "cre"))
-Description: What the package does (one paragraph).
+Description: VIUSr is an R package designed to streamline the analysis of data 
+    from the 2021 Vehicle Inventory and Use Survey (VIUS), a comprehensive study 
+    of vehicle use across the United States. The package offers a collection of 
+    user-friendly functions for data cleaning, exploration, and 
+    visualization—helping researchers, policymakers, and analysts uncover trends 
+    and insights at both the national and state levels.
 License: MIT + file LICENSE
 Encoding: UTF-8
 Roxygen: list(markdown = TRUE)

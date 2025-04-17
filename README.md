@@ -1,8 +1,6 @@
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
-did i fix it now
-
 # VIUSr
 
 <!-- badges: start -->
@@ -43,11 +41,10 @@ reproducible and interpretable manner.
 ## Installation
 
 You can install the development version of VIUSr from
-[GitHub](https://github.com/) with:
+[jashonnew/VIUSr](https://github.com/jashonnew/VIUSr) with:
 
 ``` r
-# install.packages("pak")
-pak::pak("jashonnew/VIUSr")
+install.packages("jashonnew/VIUSr")
 ```
 
 ## Example
@@ -55,6 +52,6 @@ pak::pak("jashonnew/VIUSr")
 This is a basic example which shows you how to solve a common problem:
 
 ``` r
-#library(VIUSr)
+library(VIUSr)
 ## basic example code
 ```
