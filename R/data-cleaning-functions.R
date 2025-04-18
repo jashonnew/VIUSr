@@ -159,5 +159,24 @@ convert_names <- function(df) {
   df
 }
 
+#' Selects only the wanted variables
+#'
+#' In order to get a datset that is much easier, especially for less powerful
+#' machines, to work with
+#'
+#' @param vius The vius data frame all the variables in the public use file
+#'
+#' @return The vius data with only variables of interest.
+#'
+#' @export
+select_variables_vius <- function(vius) {
+  vius |> select(ID, TABWEIGHT, REGSTATE, ACQUIREYEAR, AVGWEIGHT, BTYPE,ER_COST,
+                 FUELTYPE, GM_COST, KINDOFBUS, MILESANNL, MILESLIFE, MODELYEAR,
+                 MPG, PRIMCOMMACT, PRIMPROD, TRIPOFFROAD)
+}
+
 #' @importFrom utils globalVariables
-utils::globalVariables(c("AVGWEIGHT","GM_COST"))
+utils::globalVariables(c("ID", "TABWEIGHT", "REGSTATE", "ACQUIREYEAR",
+                         "AVGWEIGHT", "BTYPE", "ER_COST", "FUELTYPE", "GM_COST",
+                         "KINDOFBUS", "MILESANNL", "MILESLIFE", "MODELYEAR",
+                         "MPG", "PRIMCOMMACT", "PRIMPROD", "TRIPOFFROAD"))

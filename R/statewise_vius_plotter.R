@@ -169,4 +169,4 @@ get_state_maps <- function(vius, var, var_label = "Value", dollars = FALSE) {
 utils::globalVariables(c("TABWEIGHT",
                          "total",
                          "REGSTATE",
-                         "estimated_vehichles"))
+                         "estimated_vehichles", ".data"))

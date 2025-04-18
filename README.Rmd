@@ -26,7 +26,7 @@ knitr::opts_chunk$set(
 
 ## Key Features
 
-- **Automated Data Cleaning**: Efficiently prepares raw VIUS 2021 data into a tidy, analysis-ready format with minimal user intervention. Cleaning functions added include `names`, `drop_bad_values`, and `charToNum`.
+- **Automated Data Cleaning**: Efficiently prepares raw VIUS 2021 data into a tidy, analysis-ready format with minimal user intervention. Cleaning functions added include `convert_names`, `drop_bad_values`, and `charToNum`.
 - **State-Level Exploration**: Generate focused summaries and visualizations for individual U.S. states to understand regional vehicle usage patterns.
 - **Cross-State Comparison**: Compare metrics across states to identify trends and outliers in vehicle inventory and usage.
 - **National Overview**: Access high-level summaries and visual representations of key statistics across the entire U.S.

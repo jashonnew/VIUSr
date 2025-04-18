@@ -21,8 +21,8 @@ at both national and state levels.
 
 - **Automated Data Cleaning**: Efficiently prepares raw VIUS 2021 data
   into a tidy, analysis-ready format with minimal user intervention.
-  Cleaning functions added include `names`, `drop_bad_values`, and
-  `charToNum`.
+  Cleaning functions added include `convert_names`, `drop_bad_values`,
+  and `charToNum`.
 - **State-Level Exploration**: Generate focused summaries and
   visualizations for individual U.S. states to understand regional
   vehicle usage patterns.

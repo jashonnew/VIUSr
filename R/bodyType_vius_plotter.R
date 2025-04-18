@@ -63,3 +63,5 @@ get_btype_graphs <- function(vius1, var, plot_title = "BAR CHART",
       plot.background = ggplot2::element_rect(fill = "black")
     )
 }
+#' @importFrom utils globalVariables
+utils::globalVariables(c("BTYPE"))
