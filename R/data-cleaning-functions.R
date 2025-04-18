@@ -118,10 +118,10 @@ convert_names <- function(df) {
     "48" = "Mixed freight"
   )
   df <- dplyr::mutate(df,
-                      PRIMPROD = factor(
-                        primprod_labels[as.character(df$PRIMPROD)],
-                        levels = primprod_labels
-                      )
+    PRIMPROD = factor(
+      primprod_labels[as.character(df$PRIMPROD)],
+      levels = primprod_labels
+    )
   )
 
   df <- df |>
@@ -160,4 +160,4 @@ convert_names <- function(df) {
 }
 
 #' @importFrom utils globalVariables
-utils::globalVariables(c("AVGWEIGHT","GM_COST"))
+utils::globalVariables(c("AVGWEIGHT", "GM_COST"))
