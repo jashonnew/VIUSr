@@ -2,3 +2,4 @@
 
 export(get_state_graphs)
 export(get_state_maps)
+importFrom(utils,globalVariables)

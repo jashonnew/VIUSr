@@ -164,3 +164,9 @@ get_state_maps <- function(vius, var, var_label = "Value", dollars = FALSE) {
     plotly::layout(geo = geo1)
   state_map
 }
+
+#' @importFrom utils globalVariables
+utils::globalVariables(c("TABWEIGHT",
+                         "total",
+                         "REGSTATE",
+                         "estimated_vehichles"))
