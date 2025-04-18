@@ -13,7 +13,7 @@ char_to_num <- function(df) {
     as.numeric()
   df <- df |>
     dplyr::mutate(AVGWEIGHT = as.numeric(AVGWEIGHT)) |>
-    dplyr::mutate(AVGWEIGHT = case_when(
+    dplyr::mutate(AVGWEIGHT = dplyr::case_when(
       AVGWEIGHT == 1 ~ 3000,
       AVGWEIGHT == 2 ~ 7250,
       AVGWEIGHT == 3 ~ 9250,
@@ -33,7 +33,7 @@ char_to_num <- function(df) {
 
   df <- df |>
     dplyr::mutate(GM_COST = as.numeric(GM_COST)) |>
-    dplyr::mutate(GM_COST = case_when(
+    dplyr::mutate(GM_COST = dplyr::case_when(
       GM_COST == 1 ~ 50,
       GM_COST == 2 ~ 250,
       GM_COST == 3 ~ 750,
@@ -44,7 +44,7 @@ char_to_num <- function(df) {
     ))
 
   df <- df |>
-    dplyr::mutate(ER_COST = case_when(
+    dplyr::mutate(ER_COST = dplyr::case_when(
       ER_COST == "1" ~ 750,
       ER_COST == "2" ~ 1500,
       ER_COST == "3" ~ 3000,
@@ -118,14 +118,14 @@ convert_names <- function(df) {
     "48" = "Mixed freight"
   )
   df <- dplyr::mutate(df,
-    PRIMPROD = factor(
-      primprod_labels[as.character(df$PRIMPROD)],
-      levels = primprod_labels
-    )
+                      PRIMPROD = factor(
+                        primprod_labels[as.character(df$PRIMPROD)],
+                        levels = primprod_labels
+                      )
   )
 
   df <- df |>
-    mutate(BTYPE = case_when(
+    dplyr::mutate(BTYPE = dplyr::case_when(
       BTYPE == "01" ~ "Pickup",
       BTYPE == "02" ~ "Minvan",
       BTYPE == "03" ~ "Other light van",
@@ -158,3 +158,6 @@ convert_names <- function(df) {
 
   df
 }
+
+#' @importFrom utils globalVariables
+utils::globalVariables(c("AVGWEIGHT","GM_COST"))

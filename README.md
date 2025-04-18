@@ -55,3 +55,8 @@ This is a basic example which shows you how to solve a common problem:
 library(VIUSr)
 ## basic example code
 ```
+
+``` r
+#' @importFrom utils globalVariables
+utils::globalVariables(c("z"))
+```

@@ -52,3 +52,8 @@ library(VIUSr)
 ## basic example code
 ```
 
+
+```r
+#' @importFrom utils globalVariables
+utils::globalVariables(c("z"))
+```
