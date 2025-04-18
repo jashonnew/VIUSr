@@ -17,3 +17,6 @@ get_btype_graphs <- function(vius1, var, plot_title = "Title",
          y = y_plot_label) +
     theme_minimal()
 }
+
+#' @importFrom utils globalVariables
+utils::globalVariables(c("TABWEIGHT", "BTYPE", "weighted_avg", "total"))

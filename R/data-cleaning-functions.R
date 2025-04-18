@@ -158,3 +158,6 @@ convert_names <- function(df) {
 
   df
 }
+
+#' @importFrom utils globalVariables
+utils::globalVariables(c("AVGWEIGHT","GM_COST"))
