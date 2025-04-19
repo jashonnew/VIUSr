@@ -28,10 +28,14 @@ get_state_graphs <- function(dataset, db_header, states = NULL,
   db_header_sym <- rlang::sym(db_header)
 
   # Select only needed columns
-  custom_data <- dplyr::select(dataset,
-                               tidyselect::all_of(c("TABWEIGHT",
-                                                    "REGSTATE",
-                                                    db_header)))
+  custom_data <- dplyr::select(
+    dataset,
+    tidyselect::all_of(c(
+      "TABWEIGHT",
+      "REGSTATE",
+      db_header
+    ))
+  )
 
   # Determine which states to process
   selected_states <- if (is.null(states)) {
@@ -166,7 +170,11 @@ get_state_maps <- function(vius, var, var_label = "Value", dollars = FALSE) {
 }
 
 #' @importFrom utils globalVariables
-utils::globalVariables(c("TABWEIGHT",
-                         "total",
-                         "REGSTATE",
-                         "estimated_vehichles"))
+utils::globalVariables(c(
+  "TABWEIGHT",
+  "total",
+  "REGSTATE",
+  "estimated_vehicles",
+  ".data",
+  "estimated_vehicles"
+))
