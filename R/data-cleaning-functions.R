@@ -11,6 +11,8 @@
 char_to_num <- function(df) {
   df$MODELYEAR <- stringr::str_replace_all(df$MODELYEAR, "P", "") |>
     as.numeric()
+  df$ACQUIREYEAR <- stringr::str_replace_all(df$ACQUIREYEAR, "P", "") |>
+    as.numeric()
   df <- df |>
     dplyr::mutate(AVGWEIGHT = as.numeric(AVGWEIGHT)) |>
     dplyr::mutate(AVGWEIGHT = dplyr::case_when(
@@ -53,6 +55,18 @@ char_to_num <- function(df) {
       ER_COST == "6" ~ 20000,
       TRUE ~ 0
     ))
+
+  df <- df |>
+    mutate(MPG = as.numeric(MPG))
+
+  df <- df |>
+    mutate(MILESANNL = as.numeric(MILESANNL))
+
+  df <- df |>
+    mutate(MILESLIFE = as.numeric(MILESLIFE))
+
+  df <- df |>
+    mutate(TRIPOFFROAD = as.numeric(TRIPOFFROAD))
 }
 
 #' Convert Codes to correct charater values
@@ -153,6 +167,66 @@ convert_names <- function(df) {
       BTYPE == "25" ~ "Wood chipper",
       BTYPE == "26" ~ "Other",
       BTYPE == "27" ~ "Not reported",
+      TRUE ~ NA_character_
+    ))
+
+  df <- df |>
+    dplyr::mutate(FUELTYPE = dplyr::case_when(
+      FUELTYPE == "10" ~ "Gasoline",
+      FUELTYPE == "20" ~ "Diesel",
+      FUELTYPE == "31" ~ "Compressed natural gas",
+      FUELTYPE == "32" ~ "Liquified natural gas",
+      FUELTYPE == "33" ~ "Propane",
+      FUELTYPE == "34" ~ "Alcohol fuels",
+      FUELTYPE == "35" ~ "Electricity",
+      FUELTYPE == "36" ~ "Combination",
+      FUELTYPE == "40" ~ "Not reported",
+      TRUE ~ NA_character_
+    ))
+
+  df <- df |>
+    dplyr::mutate(KINDOFBUS = dplyr::case_when(
+      KINDOFBUS == "01" ~ "Accommodation and food services (for immediate consumption)",
+      KINDOFBUS == "02" ~ "Waste management and remediation",
+      KINDOFBUS == "03" ~ "Landscaping",
+      KINDOFBUS == "04" ~ "Other administrative and support and waste management and remediation services",
+      KINDOFBUS == "05" ~ "Agriculture (crop and animal production)",
+      KINDOFBUS == "06" ~ "Fishing, hunting, trapping",
+      KINDOFBUS == "07" ~ "Forestry and logging",
+      KINDOFBUS == "08" ~ "Other agriculture, forestry, fishing, and hunting",
+      KINDOFBUS == "09" ~ "Arts, entertainment, or recreation services",
+      KINDOFBUS == "10" ~ "Construction - residential",
+      KINDOFBUS == "11" ~ "Construction - non-residential",
+      KINDOFBUS == "12" ~ "Other construction",
+      KINDOFBUS == "13" ~ "Fuel wholesale or distribution",
+      KINDOFBUS == "14" ~ "Information services (includes telephone and television)",
+      KINDOFBUS == "15" ~ "Manufacturing",
+      KINDOFBUS == "16" ~ "Mining (includes quarrying, well operations, and beneficiating)",
+      KINDOFBUS == "17" ~ "Retail trade",
+      KINDOFBUS == "18" ~ "For-hire transportation (of goods or people)",
+      KINDOFBUS == "19" ~ "Warehousing and storage",
+      KINDOFBUS == "20" ~ "Other transportation and warehousing",
+      KINDOFBUS == "21" ~ "Utilities (includes electric power, natural gas, steam supply, water supply, and sewage removal)",
+      KINDOFBUS == "22" ~ "Vehicle leasing or rental (includes short-term rentals)",
+      KINDOFBUS == "23" ~ "Wholesale trade",
+      KINDOFBUS == "24" ~ "Other services, including advertising, real estate, nonvehicle leasing or rental, educational, health care, social assistance, finance, insurance, professional, scientific, or technical services",
+      KINDOFBUS == "25" ~ "Other business type",
+      KINDOFBUS == "26" ~ "Not reported",
+      TRUE ~ NA_character_
+    ))
+
+  df <- df |>
+    dplyr::mutate(PRIMCOMMACT = dplyr::case_when(
+      PRIMCOMMACT == "11" ~ "Transporting goods/products belonging to owner or owner's company",
+      PRIMCOMMACT == "12" ~ "Transporting goods/products belonging to another person/company",
+      PRIMCOMMACT == "13" ~ "Transporting online local goods/products",
+      PRIMCOMMACT == "20" ~ "Transporting tools related to owner's business",
+      PRIMCOMMACT == "30" ~ "Transporting paying passengers",
+      PRIMCOMMACT == "40" ~ "Transporting non-paying passengers",
+      PRIMCOMMACT == "50" ~ "Rental (daily and other short term)",
+      PRIMCOMMACT == "60" ~ "Other commercial activity",
+      PRIMCOMMACT == "65" ~ "Non-commercial use",
+      PRIMCOMMACT == "70" ~ "Not reported",
       TRUE ~ NA_character_
     ))
 
