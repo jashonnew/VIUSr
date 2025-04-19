@@ -38,7 +38,8 @@ used for}
 }
 }
 \source{
-\url{https://www.census.gov/data/datasets/2021/econ/vius/2021-vius-puf.html}
+<https://www.census.gov/data/datasets/2021/econ/vius/
+2021-vius-puf.html>
 }
 \usage{
 vius
