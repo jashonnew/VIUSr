@@ -47,16 +47,55 @@ You can install the development version of VIUSr from
 install.packages("jashonnew/VIUSr")
 ```
 
-## Example
+## Data Cleaning
 
-This is a basic example which shows you how to solve a common problem:
+This package contains a cleaned version of the 2021 VIUS data set. Three
+functions, `drop_cols`, `char_to_num`, and `convert_names`, have been
+included in the package to enable users to clean future editions of the
+VIUS data set in the same way that the data has been cleaned herein.
+Each function only takes one argument, the VIUS data set that the user
+would like to clean. Future releases of the VIUS data set can be passed
+through these functions to prepare them for use with the VIUSr package.
+
+The data set `vius_raw_sample` has been included in the package to
+demonstrate the data cleaning functions. This data set includes the
+first 100 rows of the VIUS data set with no cleaning.
 
 ``` r
 library(VIUSr)
-## basic example code
-```
 
-``` r
-#' @importFrom utils globalVariables
-utils::globalVariables(c("z"))
+head(vius_raw_sample)
+#> # A tibble: 6 × 168
+#>   ID    TABWEIGHT REGSTATE ACQUIREYEAR ACQUISITION AVGWEIGHT BRAKES BTYPE
+#>   <chr>     <dbl> <chr>    <chr>             <dbl> <chr>     <chr>  <chr>
+#> 1 00001      38.5 MT       11                    2 14        3      X    
+#> 2 00002     197.  NC       Z                     2 12        3      X    
+#> 3 00003    1709   SD       21P                   2 01        X      04   
+#> 4 00004      52   ID       03                    2 X         3      X    
+#> 5 00005     286.  MO       Z                     2 01        1      13   
+#> 6 00006    8593.  MD       20                    1 01        X      04   
+#> # ℹ 160 more variables: BUSRELATED <dbl>, CAB <chr>, CABDAY <chr>,
+#> #   CABHEIGHT <dbl>, CI_AUTOEBRAKE <dbl>, CI_AUTOESTEER <dbl>,
+#> #   CI_RAUTOEBRAKE <dbl>, CUBICINCHDISP <chr>, CW_BLINDSPOT <dbl>,
+#> #   CW_FWDCOLL <dbl>, CW_LANEDEPART <dbl>, CW_PARKOBST <dbl>,
+#> #   CW_RCROSSTRAF <dbl>, CYLINDERS <chr>, DC_ACTDRIVASST <dbl>,
+#> #   DC_ADAPCRUISE <dbl>, DC_LANEASST <dbl>, DC_PLATOON <dbl>, DC_VTVCOMM <dbl>,
+#> #   DEADHEADPCT <chr>, DRIVEAXLES <dbl>, ENGREBUILD <chr>, ER_COMPOWN <chr>, …
+
+vius_cleaned <- drop_cols(vius_raw_sample)
+vius_cleaned <- char_to_num(vius_cleaned)
+vius_cleaned <- convert_names(vius_cleaned)
+head(vius_cleaned)
+#> # A tibble: 6 × 17
+#>   ID    TABWEIGHT REGSTATE ACQUIREYEAR AVGWEIGHT BTYPE  ER_COST FUELTYPE GM_COST
+#>   <chr>     <dbl> <chr>          <dbl>     <dbl> <chr>    <dbl> <chr>      <dbl>
+#> 1 00001      38.5 MT                11    115000 <NA>         0 Diesel      3000
+#> 2 00002     197.  NC                NA     70000 <NA>         0 Diesel      7500
+#> 3 00003    1709   SD                21      3000 Sport…       0 Gasoline     250
+#> 4 00004      52   ID                 3    130000 <NA>         0 <NA>       10000
+#> 5 00005     286.  MO                NA      3000 Flatb…       0 Gasoline   10000
+#> 6 00006    8593.  MD                20      3000 Sport…       0 Gasoline     250
+#> # ℹ 8 more variables: KINDOFBUS <chr>, MILESANNL <dbl>, MILESLIFE <dbl>,
+#> #   MODELYEAR <dbl>, MPG <dbl>, PRIMCOMMACT <chr>, PRIMPROD <fct>,
+#> #   TRIPOFFROAD <dbl>
 ```

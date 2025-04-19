@@ -1,6 +1,6 @@
 ## code to prepare `vius` dataset goes here
 
-vius <- readr::read_csv("data-raw/vius_2021_puf.csv")
+vius <- readr::read_csv("vius_2021_puf.csv")
 
 vius <- vius |> select(
   ID, TABWEIGHT, REGSTATE, ACQUIREYEAR, AVGWEIGHT, BTYPE,

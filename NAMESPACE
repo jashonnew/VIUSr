@@ -2,6 +2,7 @@
 
 export(char_to_num)
 export(convert_names)
+export(drop_cols)
 export(get_btype_graphs)
 export(get_state_graphs)
 export(get_state_maps)

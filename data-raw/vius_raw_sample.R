@@ -1,3 +1,4 @@
+## code to prepare `vius_raw_sample` dataset goes here
 vius_raw_sample <- readr::read_csv("data-raw/vius_2021_puf.csv")
 
 vius_raw_sample <- vius_raw_sample |>

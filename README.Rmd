@@ -43,17 +43,24 @@ You can install the development version of VIUSr from [jashonnew/VIUSr](https://
 install.packages("jashonnew/VIUSr")
 ```
 
-## Example
+## Data Cleaning
 
-This is a basic example which shows you how to solve a common problem:
+This package contains a cleaned version of the 2021 VIUS data set. Three functions, `drop_cols`, `char_to_num`, and `convert_names`, have been included in the package to enable users to clean future editions of the VIUS data set in the same way that the data has been cleaned herein. Each function only takes one argument, the VIUS data set that the user would like to clean. Future releases
+of the VIUS data set can be passed through these functions to prepare them for
+use with the VIUSr package.
+
+The data set `vius_raw_sample` has been included in the package to demonstrate
+the data cleaning functions. This data set includes the first 100 rows of the
+VIUS data set with no cleaning.
 
 ```{r example}
 library(VIUSr)
-## basic example code
+
+head(vius_raw_sample)
+
+vius_cleaned <- drop_cols(vius_raw_sample)
+vius_cleaned <- char_to_num(vius_cleaned)
+vius_cleaned <- convert_names(vius_cleaned)
+head(vius_cleaned)
 ```
 
-
-```r
-#' @importFrom utils globalVariables
-utils::globalVariables(c("z"))
-```
