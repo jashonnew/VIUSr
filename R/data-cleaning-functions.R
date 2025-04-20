@@ -16,7 +16,7 @@ drop_cols <- function(df) {
         TRIPOFFROAD
       )
   })
-  return(df)
+  df
 }
 
 #' Character to Numeric Data Frame
@@ -85,7 +85,7 @@ char_to_num <- function(df) {
       dplyr::mutate(MILESLIFE = as.numeric(MILESLIFE)) |>
       dplyr::mutate(TRIPOFFROAD = as.numeric(TRIPOFFROAD))
   })
-  return(df)
+  df
 }
 
 #' Convert Codes to correct charater values
@@ -154,9 +154,7 @@ convert_names <- function(df) {
     df <- dplyr::mutate(df,
                         PRIMPROD = factor(
                           primprod_labels[as.character(df$PRIMPROD)],
-                          levels = primprod_labels
-                        )
-    )
+                          levels = primprod_labels))
 
     df <- df |>
       dplyr::mutate(BTYPE = dplyr::case_when(
@@ -250,8 +248,24 @@ convert_names <- function(df) {
         TRUE ~ NA_character_
       ))
   })
-  return(df)
+  df
 }
 
 #' @importFrom utils globalVariables
-utils::globalVariables(c("AVGWEIGHT", "GM_COST"))
+utils::globalVariables(c("AVGWEIGHT",
+                         "GM_COST",
+                         "ID",
+                         "ACQUIREYEAR",
+                         "ER_COST",
+                         "FUELTYPE",
+                         "KINDOFBUS",
+                         "MILESANNL",
+                         "MODELYEAR",
+                         "MPG",
+                         "PRIMCOMMACT",
+                         "PRIMPROD",
+                         "TRIPOFFROAD",
+                         "MPG",
+                         "MILESANNL",
+                         "TRIPOFFROAD",
+                         "MILESLIFE"))
