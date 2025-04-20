@@ -38,6 +38,13 @@ at both national and state levels.
 makers, and data professionals seeking to work with VIUS 2021 data in a
 reproducible and interpretable manner.
 
+While many columns from the VIUS dataset are included in our cleaned
+version of the 2021 data within the package, using a future year’s data
+with the package or using any of the columns that we chose not to
+include will require a local download of the dataset upon which you can
+then apply our cleaning functions and subsequently use our graphing
+functions.
+
 ## Installation
 
 You can install the development version of VIUSr from
@@ -98,4 +105,54 @@ head(vius_cleaned)
 #> # ℹ 8 more variables: KINDOFBUS <chr>, MILESANNL <dbl>, MILESLIFE <dbl>,
 #> #   MODELYEAR <dbl>, MPG <dbl>, PRIMCOMMACT <chr>, PRIMPROD <fct>,
 #> #   TRIPOFFROAD <dbl>
+```
+
+## VIUS Plotting
+
+### Vehicle Body Type Averages
+
+The `get_btype_graphs()` function computes weighted averages by vehicle
+body type and generates a horizontal bar chart.
+
+``` r
+get_btype_graphs(vius1 = vius_cleaned,
+                 var = `MPG`,
+                 plot_title = "Average GVWR by Body Type",
+                 x_plot_label = "Average GVWR",
+                 y_plot_label = "Body Type")
+```
+
+<img src="man/figures/README-unnamed-chunk-2-1.png" width="100%" />
+
+### Mapping State-Level Data
+
+The `get_state_maps()` function visualizes state-level VIUS data on an
+interactive U.S. map. This interactive plotting feature does not render
+inside the `github_document` format but please try it for yourself with
+the code below!
+
+``` r
+get_state_maps(vius = vius_cleaned,
+               var = `MPG`,
+               var_label = "Fuel Volume",
+               dollars = FALSE)
+```
+
+### Batch Plotting by State
+
+To generate multiple bar plots by state, use the `get_state_graphs()`
+function. This is useful when you want to examine how a specific
+variable varies across different U.S. states.
+
+Note: This function produces multiple plots and is best used in an
+interactive session or saved to files.
+
+``` r
+Reference only
+get_state_graphs(dataset = vius_data,
+                  db_header = `MPG`,
+                  states = c("CA", "TX", "NY"),
+                  plot_title = "Average MPG by State",
+                  x_plot_label = "Average MPG",
+                  y_plot_label = "State")
 ```
