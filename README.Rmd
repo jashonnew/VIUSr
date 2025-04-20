@@ -64,3 +64,45 @@ vius_cleaned <- convert_names(vius_cleaned)
 head(vius_cleaned)
 ```
 
+
+## VIUS Plotting
+
+### Vehicle Body Type Averages
+The `get_btype_graphs()` function computes weighted averages by vehicle body type and generates a horizontal bar chart.
+
+```{r}
+get_btype_graphs(vius1 = vius_data,
+                 var = "GVWR",
+                 plot_title = "Average GVWR by Body Type",
+                 x_plot_label = "Average GVWR",
+                 y_plot_label = "Body Type")
+```
+
+### Mapping State-Level Data
+
+The `get_state_maps()` function visualizes state-level VIUS data on an interactive U.S. map.
+
+```{r}
+get_state_maps(vius = vius_data,
+               var = "FUELVOL",
+               var_label = "Fuel Volume",
+               dollars = FALSE)
+```
+
+
+### Batch Plotting by State
+
+To generate multiple bar plots by state, use the `get_state_graphs()` function. This is useful when you want to examine how a specific variable varies across different U.S. states.
+
+Note: This function produces multiple plots and is best used in an interactive session or saved to files.
+
+```r
+Reference only
+get_state_graphs(dataset = vius_data,
+                  db_header = "GVWR",
+                  states = c("CA", "TX", "NY"),
+                  plot_title = "Average GVWR by State",
+                  x_plot_label = "Average GVWR",
+                  y_plot_label = "State")
+
+```
