@@ -1,11 +1,12 @@
 Package: VIUSr
 Title: VIUSr: Tools for Cleaning, Exploring, and Visualizing the 2021 Vehicle Inventory and Use Survey (VIUS) Data
 Version: 0.0.1.0000
-Authors@R: 
-    person(person("Jashon", "Newlun", , "Jashon.newlun@usu.edu", role = c("aut", "cre")),
-            person("Cam", "Swapp", , "cameronswapp@gmail.com", role = c("aut", "cre")),
-            person("Ethan", "Ford", , "ethanfordj5@gmail.com", role = c("aut", "cre")),
-            person("James", "Phifer", , "jamesgphifer@gmail.com", role = c("aut", "cre")))
+Authors@R: c(
+    person("Jashon", "Newlun", , "jashon.newlun@usu.edu", role = "aut"),
+    person("Cam", "Swapp", , "cameronswapp@gmail.com", role = "aut"),
+    person("Ethan", "Ford", , "ethanfordj5@gmail.com", role = "aut"),
+    person("James", "Phifer", , "jamesgphifer@gmail.com", role = c("aut", "cre"))
+  )
 Description: VIUSr is an R package designed to streamline the analysis of data 
     from the 2021 Vehicle Inventory and Use Survey (VIUS), a comprehensive study 
     of vehicle use across the United States. The package offers a collection of 
