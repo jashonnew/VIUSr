@@ -76,9 +76,9 @@ The `get_btype_graphs()` function computes weighted averages by vehicle body typ
 ```{r}
 get_btype_graphs(vius1 = vius_cleaned,
                  var = `MPG`,
-                 plot_title = "Average GVWR by Body Type",
-                 x_plot_label = "Average GVWR",
-                 y_plot_label = "Body Type")
+                 plot_title = "Average MPG by Body Type",
+                 x_plot_label = "Body Type",
+                 y_plot_label = "Average Miles Per Gallon")
 ```
 
 ### Mapping State-Level Data
