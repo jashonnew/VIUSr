@@ -76,5 +76,7 @@ get_btype_graphs <- function(vius1, var, plot_title = "BAR CHART",
 
 #' @importFrom utils globalVariables
 utils::globalVariables(c(
-  "BTYPE"
+  "BTYPE",
+  "TABWEIGHT",
+  "total"
 ))
