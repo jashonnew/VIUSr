@@ -1,5 +1,6 @@
 ---
 output: github_document
+always_allow_html: true
 ---
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
@@ -34,6 +35,8 @@ knitr::opts_chunk$set(
 
 `VIUSr` is ideal for transportation analysts, researchers, policy makers, and data professionals seeking to work with VIUS 2021 data in a reproducible and interpretable manner.
 
+While many columns from the VIUS dataset are included in our cleaned version of the 2021 data within the package, using a future year's data with the package or using any of the columns that we chose not to include will require a local download of the dataset upon which you can then apply our cleaning functions and subsequently use our graphing functions. 
+
 
 ## Installation
 
@@ -43,17 +46,66 @@ You can install the development version of VIUSr from [jashonnew/VIUSr](https://
 install.packages("jashonnew/VIUSr")
 ```
 
-## Example
+## Data Cleaning
 
-This is a basic example which shows you how to solve a common problem:
+This package contains a cleaned version of the 2021 VIUS data set. Three functions, `drop_cols`, `char_to_num`, and `convert_names`, have been included in the package to enable users to clean future editions of the VIUS data set in the same way that the data has been cleaned herein. Each function only takes one argument, the VIUS data set that the user would like to clean. Future releases
+of the VIUS data set can be passed through these functions to prepare them for
+use with the VIUSr package.
+
+The data set `vius_raw_sample` has been included in the package to demonstrate
+the data cleaning functions. This data set includes the first 100 rows of the
+VIUS data set with no cleaning.
 
 ```{r example}
 library(VIUSr)
-## basic example code
+
+head(vius_raw_sample)
+
+vius_cleaned <- drop_cols(vius_raw_sample)
+vius_cleaned <- char_to_num(vius_cleaned)
+vius_cleaned <- convert_names(vius_cleaned)
+head(vius_cleaned)
 ```
 
 
+## VIUS Plotting
+
+### Vehicle Body Type Averages
+The `get_btype_graphs()` function computes weighted averages by vehicle body type and generates a horizontal bar chart.
+
+```{r}
+get_btype_graphs(vius1 = vius_cleaned,
+                 var = `MPG`,
+                 plot_title = "Average GVWR by Body Type",
+                 x_plot_label = "Average GVWR",
+                 y_plot_label = "Body Type")
+```
+
+### Mapping State-Level Data
+
+The `get_state_maps()` function visualizes state-level VIUS data on an interactive U.S. map. This interactive plotting feature does not render inside the `github_document` format but please try it for yourself with the code below!
+
 ```r
-#' @importFrom utils globalVariables
-utils::globalVariables(c("z"))
+get_state_maps(vius = vius_cleaned,
+               var = `MPG`,
+               var_label = "Fuel Volume",
+               dollars = FALSE)
+```
+
+
+### Batch Plotting by State
+
+To generate multiple bar plots by state, use the `get_state_graphs()` function. This is useful when you want to examine how a specific variable varies across different U.S. states.
+
+Note: This function produces multiple plots and is best used in an interactive session or saved to files.
+
+```r
+Reference only
+get_state_graphs(dataset = vius_data,
+                  db_header = `MPG`,
+                  states = c("CA", "TX", "NY"),
+                  plot_title = "Average MPG by State",
+                  x_plot_label = "Average MPG",
+                  y_plot_label = "State")
+
 ```

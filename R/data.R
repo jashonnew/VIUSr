@@ -40,5 +40,19 @@
 #'   \item{TRIPOFFROAD}{Percent of annual miles driven off road}
 #' }
 #'
-#' @source <https://www.census.gov/data/datasets/2021/econ/vius/2021-vius-puf.html>
+#' @source <https://www.census.gov/data/datasets/2021/econ/vius/
+#' 2021-vius-puf.html>
 "vius"
+
+#' The first 100 rows of the VIUS set data with no cleaning done
+#'
+#' This is a subset of the VIUS data set with none of the package's data
+#' cleaning functions applied to it. Only the first 100 rows of the data were
+#' included to keep the size of the data frame small.
+#'
+#' @format ## `vius_raw_sample`
+#' A data frame with 100 rows and 168 columns
+#'
+#' @source <https://www.census.gov/data/datasets/2021/econ/vius/
+#' 2021-vius-puf.html>
+"vius_raw_sample"

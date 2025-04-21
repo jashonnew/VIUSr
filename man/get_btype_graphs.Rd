@@ -13,28 +13,34 @@ get_btype_graphs(
 )
 }
 \arguments{
-\item{vius1}{A data frame containing at least the columns \code{TABWEIGHT}, \code{BTYPE}, and the variable of interest.}
+\item{vius1}{A data frame containing at least the columns \code{TABWEIGHT},
+\code{BTYPE}, and the variable of interest.}
 
 \item{var}{The variable to plot, passed unquoted (e.g., \code{MPG}).}
 
-\item{plot_title}{A character string for the plot title. Defaults to \code{"Title"}.}
+\item{plot_title}{A character string for the plot title.
+Defaults to \code{"Title"}.}
 
-\item{x_plot_label}{A character string for the x-axis label. Defaults to \code{"x axis"}.}
+\item{x_plot_label}{A character string for the x-axis label.
+Defaults to \code{"x axis"}.}
 
-\item{y_plot_label}{A character string for the y-axis label. Defaults to \code{"y axis"}.}
+\item{y_plot_label}{A character string for the y-axis label.
+Defaults to \code{"y axis"}.}
 }
 \value{
 A ggplot2 object representing the bar chart.
 }
 \description{
-This function calculates the weighted average of a given variable across vehicle body types
-using \code{TABWEIGHT} for weights, and generates a horizontal bar chart. Each bar represents a
-body type, colored individually, and sorted by the weighted average.
+This function calculates the weighted average of a given variable across
+vehicle body types using \code{TABWEIGHT} for weights, and generates a
+horizontal bar chart. Each bar represents a body type, colored
+individually, and sorted by the weighted average.
 }
 \examples{
 \dontrun{
-  get_btype_graphs(vius1, MPG, plot_title = "Average MPG by Body Type",
-                   x_plot_label = "Body Type", y_plot_label = "Average MPG")
+get_btype_graphs(vius1, MPG,
+  plot_title = "Average MPG by Body Type",
+  x_plot_label = "Body Type", y_plot_label = "Average MPG")
 }
 
 }
