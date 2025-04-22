@@ -36,16 +36,13 @@ get_state_graphs <- function(dataset, db_header, states = NULL,
 
   for (state in selected_states) {
     state_data <- dplyr::filter(
-      custom_data, REGSTATE == state
+      custom_data, REGSTATE == state, !is.na({{ db_header }})
     )
 
     summary_data <- state_data |>
       dplyr::group_by({{ db_header }}) |>
       dplyr::summarise(estimated_vehicles = sum(TABWEIGHT), .groups = "drop") |>
       dplyr::arrange(dplyr::desc(estimated_vehicles))
-
-    # Convert to factor for categorical coloring
-    summary_data[[{{ db_header }}]] <- as.factor(summary_data[[{{ db_header }}]])
 
     p <- ggplot2::ggplot(
       summary_data,
@@ -61,10 +58,6 @@ get_state_graphs <- function(dataset, db_header, states = NULL,
         x = x_plot_label,
         y = y_plot_label,
         fill = x_plot_label
-      ) +
-      ggplot2::scale_fill_manual(
-        values = grDevices::
-          topo.colors(length(unique(summary_data[[{{ db_header }}]])))
       ) +
       ggplot2::theme_minimal(base_size = 13) +
       ggplot2::theme(
