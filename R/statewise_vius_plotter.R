@@ -24,18 +24,8 @@ get_state_graphs <- function(dataset, db_header, states = NULL,
                              plot_title = "State - ",
                              x_plot_label = "x axis", y_plot_label = "y axis",
                              sleep_time = 2) {
-  # Convert column name from string to symbol
-  db_header_sym <- rlang::sym(db_header)
-
   # Select only needed columns
-  custom_data <- dplyr::select(
-    dataset,
-    tidyselect::all_of(c(
-      "TABWEIGHT",
-      "REGSTATE",
-      db_header
-    ))
-  )
+  custom_data <- dplyr::select(dataset, TABWEIGHT, REGSTATE, {{ db_header }})
 
   # Determine which states to process
   selected_states <- if (is.null(states)) {
@@ -46,23 +36,18 @@ get_state_graphs <- function(dataset, db_header, states = NULL,
 
   for (state in selected_states) {
     state_data <- dplyr::filter(
-      custom_data, REGSTATE == state,
-      !is.na(.data[[db_header]]),
-      !is.na(TABWEIGHT)
+      custom_data, REGSTATE == state, !is.na({{ db_header }})
     )
 
     summary_data <- state_data |>
-      dplyr::group_by(!!db_header_sym) |>
+      dplyr::group_by({{ db_header }}) |>
       dplyr::summarise(estimated_vehicles = sum(TABWEIGHT), .groups = "drop") |>
       dplyr::arrange(dplyr::desc(estimated_vehicles))
-
-    # Convert to factor for categorical coloring
-    summary_data[[db_header]] <- as.factor(summary_data[[db_header]])
 
     p <- ggplot2::ggplot(
       summary_data,
       ggplot2::aes(
-        x = stats::reorder(!!db_header_sym, estimated_vehicles),
+        x = stats::reorder({{ db_header }}, estimated_vehicles),
         y = estimated_vehicles
       )
     ) +
@@ -73,10 +58,6 @@ get_state_graphs <- function(dataset, db_header, states = NULL,
         x = x_plot_label,
         y = y_plot_label,
         fill = x_plot_label
-      ) +
-      ggplot2::scale_fill_manual(
-        values = grDevices::
-          topo.colors(length(unique(summary_data[[db_header]])))
       ) +
       ggplot2::theme_minimal(base_size = 13) +
       ggplot2::theme(
