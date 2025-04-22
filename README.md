@@ -116,7 +116,7 @@ The `get_btype_graphs()` function computes weighted averages by vehicle
 body type and generates a horizontal bar chart.
 
 ``` r
-get_btype_graphs(vius1 = vius_cleaned,
+get_btype_graphs(vius1 = vius,
                  var = `MPG`,
                  plot_title = "Average MPG by Body Type",
                  x_plot_label = "Body Type",
@@ -133,7 +133,7 @@ inside the `github_document` format but please try it for yourself with
 the code below!
 
 ``` r
-get_state_maps(vius = vius_cleaned,
+get_state_maps(vius = vius,
                var = `MPG`,
                var_label = "Fuel Volume",
                dollars = FALSE)
@@ -150,12 +150,10 @@ interactive session or saved to files.
 
 ``` r
 Reference only
-get_state_graphs(dataset = vius_data,
+get_state_graphs(dataset = vius,
                   db_header = `MPG`,
                   states = c("CA", "TX", "NY"),
                   plot_title = "Average MPG by State",
                   x_plot_label = "Average MPG",
                   y_plot_label = "State")
 ```
-
-### Package URL: <https://github.com/jashonnew/VIUSr>

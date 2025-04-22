@@ -1,9 +1,11 @@
 ---
-output: github_document
-always_allow_html: true
+title: "VIUSr_vignette"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{VIUSr_vignette}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
 ---
-
-<!-- README.md is generated from README.Rmd. Please edit that file -->
 
 ```{r, include = FALSE}
 knitr::opts_chunk$set(
@@ -14,13 +16,9 @@ knitr::opts_chunk$set(
 )
 ```
 
-# VIUSr
-
-<!-- badges: start -->
-
-[![R-CMD-check](https://github.com/jashonnew/VIUSr/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/jashonnew/VIUSr/actions/workflows/R-CMD-check.yaml)
-
-<!-- badges: end -->
+```{r setup}
+library(VIUSr)
+```
 
 ## Overview
 
@@ -103,3 +101,5 @@ get_state_graphs(dataset = vius,
                   x_plot_label = "Average MPG",
                   y_plot_label = "State")
 ```
+
+### Package URL: <https://github.com/jashonnew/VIUSr>

@@ -151,10 +151,9 @@ convert_names <- function(df) {
       "48" = "Mixed freight"
     )
 
-    df <- dplyr::mutate(df,
-                        PRIMPROD = factor(
-                          primprod_labels[as.character(df$PRIMPROD)],
-                          levels = primprod_labels))
+    df <- dplyr::mutate(df, PRIMPROD =
+                          factor(primprod_labels[as.character(df$PRIMPROD)],
+                                 levels = primprod_labels))
 
     df <- df |>
       dplyr::mutate(BTYPE = dplyr::case_when(

@@ -63,11 +63,10 @@ get_state_graphs <- function(dataset, db_header, states = NULL,
       summary_data,
       ggplot2::aes(
         x = stats::reorder(!!db_header_sym, estimated_vehicles),
-        y = estimated_vehicles,
-        fill = !!db_header_sym
+        y = estimated_vehicles
       )
     ) +
-      ggplot2::geom_bar(stat = "identity") +
+      ggplot2::geom_bar(stat = "identity", fill = "steelblue") +
       ggplot2::coord_flip() +
       ggplot2::labs(
         title = paste(plot_title, state),

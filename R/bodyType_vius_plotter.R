@@ -49,12 +49,9 @@ get_btype_graphs <- function(vius1, var, plot_title = "BAR CHART",
 
   # Now make the plot
   ggplot2::ggplot(custom_data, ggplot2::aes(x = stats::reorder(BTYPE, total),
-                                            y = total, fill = BTYPE)) +
-    ggplot2::geom_bar(stat = "identity") +
+                                            y = total)) +
+    ggplot2::geom_bar(stat = "identity", fill = "steelblue") +
     ggplot2::coord_flip() +
-    ggplot2::scale_fill_manual(values = grDevices::
-      topo.colors(length(custom_data$BTYPE))
-    ) +
     ggplot2::labs(
       title = paste(rlang::as_name(var), plot_title),
       x = x_plot_label,
