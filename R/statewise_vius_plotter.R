@@ -97,7 +97,7 @@ get_state_graphs <- function(dataset, db_header, states = NULL,
 #'   (The average percentage of miles driven off-road per vehicle)
 #' @param var_label A string representing the label the user would like to see
 #'   on the map for the value of the selected variable. If no value is entered,
-#'   the label will simply say "value."
+#'   the label will simply say "Value."
 #' @param dollars A boolean value. Defaults to False. If true, will append a "$"
 #'   character to the value when displayed on the map.
 #' @returns A plotly map of the United States with darker states representing
