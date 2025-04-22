@@ -21,8 +21,7 @@ Imports: rlang,
          dplyr,
          ggplot2,
          plotly,
-         stringr,
-         tidyselect
+         stringr
 Depends: 
     R (>= 2.10)
 LazyData: true

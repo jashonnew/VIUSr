@@ -21,7 +21,7 @@ vehicle was manufactured), MPG (average miles per gallon), TRIPOFFROAD
 
 \item{var_label}{A string representing the label the user would like to see
 on the map for the value of the selected variable. If no value is entered,
-the label will simply say "value."}
+the label will simply say "Value."}
 
 \item{dollars}{A boolean value. Defaults to False. If true, will append a "$"
 character to the value when displayed on the map.}
