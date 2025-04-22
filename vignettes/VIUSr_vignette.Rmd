@@ -44,6 +44,35 @@ You can install the development version of VIUSr from [jashonnew/VIUSr](https://
 install.packages("jashonnew/VIUSr")
 ```
 
+## Dataset Description
+
+The VIUS dataset contains several categorical and quantitative variables. The dataset in this package keeps a subset of both of these types of variables.
+
+### Categorical
+**Note:** Many of these variables are represented in the VIUS dataset as numbers that represent different values of the variable. The vius dataset included in this package has converted these values to the string values that the numbers represent.
+
+* ID: The unique ID number of each sampled vehicle
+* REGSTATE: The US state in which the vehicle is registered
+* BTYPE: The body type of the vehicle
+* FUELTYPE: The type of fuel the vehicle consumes
+* KINDOFBUS: The kind of business activity the vehicle is most often used for
+* PRIMCOMMACT: The commercial activity that the vehicle is most often used for
+* PRIMPROD: The primary product carried by the vehicle
+
+### Quantitative
+**Note:** Many of these variables are represented in the VIUS dataset as placeholder numbers that represent different values of the variable. The vius dataset included in this package has converted these values to the numeric values that the placeholder numbers represent.
+
+* TABWEIGHT: The weight factor for each sampled vehicle
+* ACQUIREYEAR: The year in which the current owner acquired the vehicle - all vehicles acquired in 1999 or earlier are grouped together
+* AVGWEIGHT: The average weight (in pounds) of the vehicle in its most common trailer configuration
+* ER_COST: The total cost (in US dollars) of extensive vehicle repairs in 2021
+* GM_COST: The total cost (in US dollars) of general vehicle maintenance in 2021
+* MILESANNL: The number of miles driven in 2021
+* MILESLIFE: The number of miles driven since the vehicle was manufactured
+* MODELYEAR: The model year of the vehicle - all vehicles manufactured in 1999 or earlier are grouped together
+* MPG: The average miles per gallon
+* TRIPOFFROAD: Percent of miles driven off road
+
 ## Data Cleaning
 
 This package contains a cleaned version of the 2021 VIUS data set. Three functions, `drop_cols`, `char_to_num`, and `convert_names`, have been included in the package to enable users to clean future editions of the VIUS data set in the same way that the data has been cleaned herein. Each function only takes one argument, the VIUS data set that the user would like to clean. Future releases of the VIUS data set can be passed through these functions to prepare them for use with the VIUSr package.
