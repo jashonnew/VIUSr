@@ -156,4 +156,9 @@ knitr::include_graphics("getstategraphs.png")
 
 Here is the final graph the code above would produce. This shows the estimated total number of trucks that carry each of the products in Utah. 
 
+
+## Conclusion
+
+The VIUSr package offers a reproducible workflow for analyzing and visualizing data from the 2021 Vehicle Inventory and Use Survey. With built-in tools for data cleaning, state-level exploration, and interactive plotting, it allows researchers, analysts, and policymakers to uncover meaningful analyses about vehicle usage across the U.S. Whether working with the included dataset or applying the tools to future VIUS releases, VIUSr simplifies the process from raw data to impactful analysis.
+
 ### Package URL: <https://github.com/jashonnew/VIUSr>
