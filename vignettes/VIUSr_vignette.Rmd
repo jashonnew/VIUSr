@@ -130,7 +130,7 @@ knitr::include_graphics("getstatemaps.png")
 
 </div>
 
-Here you can see how one would use the `get_state_maps()` function, whatever variable the user is interested in you can see the entire country and which states have the highest averages for that value, this in necessary or states like Texas and California would dominate all the graphs. Then the user can hover their mouse over any states they are interested in and see the exact value. 
+Here you can see how one would use the `get_state_maps()` function. This graph shows the average values for the chosen variable, this is necessary or states like Texas and California would dominate all the graphs. Then the user can hover their mouse over any states they are interested in and see the exact value. 
 
 ### Batch Plotting by State
 
