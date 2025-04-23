@@ -114,29 +114,44 @@ Here you can see a plot a user of this package can make with one function call t
 
 ### Mapping State-Level Data
 
-The `get_state_maps()` function visualizes state-level VIUS data on an interactive U.S. map. This interactive plotting feature does not render inside the `github_document` format but please try it for yourself with the code below!
+The `get_state_maps()` function visualizes state-level VIUS data on an interactive U.S. map. This is an interactive plotting feature, allowing user of this package to see the not just which states have the highest values for the variable they choose but also see the exact values for any given state. Below is how one would call the function.
 
 ``` r
 get_state_maps(vius = vius,
                var = MPG,
-               var_label = "Fuel Volume",
+               var_label = "Average Miles Per Gallon",
                dollars = FALSE)
 ```
+<div style="text-align: center;">
+
+```{r, echo=FALSE, out.width="100%"}
+knitr::include_graphics("getstatemaps.png")
+```
+
+</div>
+
+Here you can see how one would use the `get_state_maps()` function, whatever variable the user is interested in you can see the entire country and which states have the highest averages for that value, this in necessary or states like Texas and California would dominate all the graphs. Then the user can hover their mouse over any states they are interested in and see the exact value. 
 
 ### Batch Plotting by State
 
-To generate multiple bar plots by state, use the `get_state_graphs()` function. This is useful when you want to examine how a specific variable varies across different U.S. states.
+To generate multiple bar plots by state, use the `get_state_graphs()` function. This is useful when you want to examine how a specific categorical variable varies across different U.S. states.
 
 Note: This function produces multiple plots and is best used in an interactive session or saved to files.
 
 ``` r
-Reference only
 get_state_graphs(dataset = vius,
-                  db_header = MPG,
-                  states = c("CA", "TX", "NY"),
-                  plot_title = "Average MPG by State",
-                  x_plot_label = "Average MPG",
-                  y_plot_label = "State")
+                  db_header = PRIMPROD,
+                  states = c("CA", "TX", "UT"),
+                  plot_title = "Primary Products for",
+                  x_plot_label = "Primary Product Carried in 2021",
+                  y_plot_label = "Estimated Total Trucks Carrying a Product")
 ```
+<div style="text-align: center;">
+
+```{r, echo=FALSE, out.width="100%"}
+knitr::include_graphics("getstategraphs.png")
+```
+
+</div>
 
 ### Package URL: <https://github.com/jashonnew/VIUSr>
