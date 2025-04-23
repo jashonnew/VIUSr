@@ -154,4 +154,6 @@ knitr::include_graphics("getstategraphs.png")
 
 </div>
 
+Here is the final graph the code above would produce. This shows the estimated total number of trucks that carry each of the products in Utah. 
+
 ### Package URL: <https://github.com/jashonnew/VIUSr>
