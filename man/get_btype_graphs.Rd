@@ -16,7 +16,14 @@ get_btype_graphs(
 \item{vius1}{A data frame containing at least the columns \code{TABWEIGHT},
 \code{BTYPE}, and the variable of interest.}
 
-\item{var}{The variable to plot, passed unquoted (e.g., \code{MPG}).}
+\item{var}{The column of the VIUS dataset. Must be a column of numeric
+values in the cleaned VIUS dataset available within the VIUSr package.
+Options are AVGWEIGHT (average vehicle weight), ER_COST (average cost of
+extensive vehicle repairs), GM_COST (average cost of general vehicle
+maintenance), MILESANNL (average miles traveled per vehicle in the year
+of the survey), MILESLIFE (average miles traveled per vehicle since the
+vehicle was manufactured), MPG (average miles per gallon), TRIPOFFROAD
+(The average percentage of miles driven off-road per vehicle)}
 
 \item{plot_title}{A character string for the plot title.
 Defaults to \code{"Title"}.}
